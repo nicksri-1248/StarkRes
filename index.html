@@ -1,0 +1,969 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Vendor Listing Management - Add New Listing</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: black;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+            overflow: hidden;
+        }
+
+        .header {
+            background: black;
+            color: white;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .header h1 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .header p {
+            opacity: 0.9;
+            font-size: 14px;
+        }
+
+        .vendor-type-selector {
+            padding: 30px;
+            background: #f8f9fe;
+            border-bottom: 2px solid #e9ecef;
+        }
+
+        .vendor-type-selector h2 {
+            margin-bottom: 20px;
+            color: #2d3748;
+        }
+
+        .type-buttons {
+            display: flex;
+            gap: 20px;
+        }
+
+        .type-btn {
+            flex: 1;
+            padding: 20px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            background: white;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+        }
+
+        .type-btn:hover {
+            border-color: #5e72e4;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(94, 114, 228, 0.2);
+        }
+
+        .type-btn.active {
+            border-color: #5e72e4;
+            background: #f0f4ff;
+        }
+
+        .type-btn h3 {
+            color: #2d3748;
+            margin-bottom: 5px;
+        }
+
+        .type-btn p {
+            color: #718096;
+            font-size: 14px;
+        }
+
+        .form-container {
+            padding: 30px;
+            display: none;
+        }
+
+        .form-container.active {
+            display: block;
+        }
+
+        .form-section {
+            margin-bottom: 30px;
+            padding: 25px;
+            background: #f8f9fe;
+            border-radius: 8px;
+            border-left: 4px solid #5e72e4;
+        }
+
+        .form-section h3 {
+            color: #2d3748;
+            margin-bottom: 20px;
+            font-size: 18px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            display: block;
+            margin-bottom: 8px;
+            color: #2d3748;
+            font-weight: 500;
+        }
+
+        .form-group input,
+        .form-group textarea,
+        .form-group select {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            font-size: 14px;
+            transition: border-color 0.3s ease;
+        }
+
+        .form-group input:focus,
+        .form-group textarea:focus,
+        .form-group select:focus {
+            outline: none;
+            border-color: #5e72e4;
+            box-shadow: 0 0 0 3px rgba(94, 114, 228, 0.1);
+        }
+
+        .form-group textarea {
+            resize: vertical;
+            min-height: 100px;
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .service-checkbox {
+            display: flex;
+            align-items: center;
+            padding: 12px;
+            background: white;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .service-checkbox:hover {
+            border-color: #5e72e4;
+            background: #f0f4ff;
+        }
+
+        .service-checkbox input[type="checkbox"] {
+            width: auto;
+            margin-right: 10px;
+            cursor: pointer;
+        }
+
+        .service-checkbox.checked {
+            border-color: #5e72e4;
+            background: #f0f4ff;
+        }
+
+        .package-tabs {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .package-tab {
+            padding: 12px 24px;
+            background: transparent;
+            border: none;
+            cursor: pointer;
+            color: #718096;
+            font-weight: 500;
+            border-bottom: 3px solid transparent;
+            transition: all 0.3s ease;
+        }
+
+        .package-tab:hover {
+            color: #5e72e4;
+        }
+
+        .package-tab.active {
+            color: #5e72e4;
+            border-bottom-color: #5e72e4;
+        }
+
+        .package-content {
+            display: none;
+        }
+
+        .package-content.active {
+            display: block;
+        }
+
+        .sub-service-item {
+            padding: 15px;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 6px;
+            margin-bottom: 15px;
+        }
+
+        .sub-service-header {
+            display: flex;
+            justify-content: between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .specification-list {
+            margin-top: 10px;
+        }
+
+        .specification-item {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+            align-items: center;
+        }
+
+        .specification-item input {
+            flex: 1;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 500;
+            transition: all 0.3s ease;
+        }
+
+        .btn-primary {
+            background: #5e72e4;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #4c63d2;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(94, 114, 228, 0.3);
+        }
+
+        .btn-secondary {
+            background: #718096;
+            color: white;
+        }
+
+        .btn-secondary:hover {
+            background: #4a5568;
+        }
+
+        .btn-success {
+            background: #48bb78;
+            color: white;
+        }
+
+        .btn-success:hover {
+            background: #38a169;
+        }
+
+        .btn-danger {
+            background: #f56565;
+            color: white;
+        }
+
+        .btn-danger:hover {
+            background: #e53e3e;
+        }
+
+        .btn-small {
+            padding: 6px 12px;
+            font-size: 12px;
+        }
+
+        .form-actions {
+            display: flex;
+            gap: 15px;
+            justify-content: flex-end;
+            padding: 30px;
+            border-top: 2px solid #e9ecef;
+        }
+
+        .row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .alert {
+            padding: 15px;
+            border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background: #bee3f8;
+            color: #2c5282;
+            border-left: 4px solid #3182ce;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge-standard {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .badge-premium {
+            background: #feebc8;
+            color: #c05621;
+        }
+
+        .badge-royal {
+            background: #d6bcfa;
+            color: #6b46c1;
+        }
+
+        .dynamic-service-section {
+            margin-top: 20px;
+            padding: 20px;
+            background: white;
+            border-radius: 6px;
+            border: 2px dashed #e2e8f0;
+        }
+
+        .main-service-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 15px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+
+        .media-upload {
+            padding: 20px;
+            border: 2px dashed #cbd5e0;
+            border-radius: 6px;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .media-upload:hover {
+            border-color: #5e72e4;
+            background: #f0f4ff;
+        }
+
+        .media-preview {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 15px;
+            margin-top: 15px;
+        }
+
+        .media-item {
+            position: relative;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 2px solid #e2e8f0;
+        }
+
+        .media-item img {
+            width: 100%;
+            height: 150px;
+            object-fit: cover;
+        }
+
+        .media-item .remove-media {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            background: #f56565;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 25px;
+            height: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            line-height: 1;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>🎯 Add New Listing</h1>
+            <p>Create your service or venue listing to reach more customers</p>
+        </div>
+
+        <div class="vendor-type-selector">
+            <h2>Select Your Vendor Type</h2>
+            <div class="type-buttons">
+                <div class="type-btn" id="venueProviderBtn" onclick="selectVendorType('venue')">
+                    <h3>🏛️ Venue Provider</h3>
+                    <p>Hotels, Banquet Halls, Resorts, Gardens</p>
+                </div>
+                <div class="type-btn" id="serviceProviderBtn" onclick="selectVendorType('service')">
+                    <h3>🎨 Service Provider</h3>
+                    <p>Photography, Catering, Entertainment, Decoration</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Venue Provider Form -->
+        <div id="venueProviderForm" class="form-container">
+            <div class="alert alert-info">
+                <strong>Venue Provider:</strong> Select multiple services and create three packages (Standard, Premium, Royal) for your venue.
+            </div>
+
+            <div class="form-section">
+                <h3>📋 Basic Information</h3>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Venue Name *</label>
+                        <input type="text" id="venueName" placeholder="Enter venue name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Email *</label>
+                        <input type="email" id="venueEmail" placeholder="contact@venue.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea id="venueDescription" placeholder="Describe your venue and its unique features..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>🎯 Select Services Available at Your Venue</h3>
+                <p style="color: #718096; margin-bottom: 15px;">Choose all services that your venue provides</p>
+                <div class="services-grid">
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="DJ/MUSIC" onchange="toggleServiceCheckbox(this)">
+                        <span>🎵 DJ/MUSIC</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="Parking" onchange="toggleServiceCheckbox(this)">
+                        <span>🅿️ Parking</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="Catering" onchange="toggleServiceCheckbox(this)">
+                        <span>🍽️ Catering</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="Decoration" onchange="toggleServiceCheckbox(this)">
+                        <span>🎨 Decoration</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="Waiters" onchange="toggleServiceCheckbox(this)">
+                        <span>👔 Waiters</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="Accommodation" onchange="toggleServiceCheckbox(this)">
+                        <span>🏨 Accommodation</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="Stage" onchange="toggleServiceCheckbox(this)">
+                        <span>🎭 Stage</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="TableChairs" onchange="toggleServiceCheckbox(this)">
+                        <span>🪑 Table & Chairs</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="FoodStalls" onchange="toggleServiceCheckbox(this)">
+                        <span>🍕 Food Stalls</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="StageAndSheeting" onchange="toggleServiceCheckbox(this)">
+                        <span>⛺ Stage & Sheeting</span>
+                    </label>
+                    <label class="service-checkbox">
+                        <input type="checkbox" name="venueService" value="PhotoVideoGraphy" onchange="toggleServiceCheckbox(this)">
+                        <span>📸 Photo/Video Graphy</span>
+                    </label>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>📦 Create Packages</h3>
+                <p style="color: #718096; margin-bottom: 15px;">Define three package tiers for your venue with selected services</p>
+                
+                <div class="package-tabs">
+                    <button class="package-tab active" onclick="switchPackageTab('standard')">
+                        Standard <span class="badge badge-standard">STANDARD</span>
+                    </button>
+                    <button class="package-tab" onclick="switchPackageTab('premium')">
+                        Premium <span class="badge badge-premium">PREMIUM</span>
+                    </button>
+                    <button class="package-tab" onclick="switchPackageTab('royal')">
+                        Royal <span class="badge badge-royal">ROYAL</span>
+                    </button>
+                </div>
+
+                <!-- Standard Package -->
+                <div id="standardPackage" class="package-content active">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Package Name *</label>
+                            <input type="text" placeholder="e.g., Standard Wedding Package" value="Standard Package">
+                        </div>
+                        <div class="form-group">
+                            <label>Base Price *</label>
+                            <input type="number" placeholder="₹ 50,000">
+                        </div>
+                        <div class="form-group">
+                            <label>Guest Capacity *</label>
+                            <input type="number" placeholder="e.g., 100">
+                        </div>
+                        <div class="form-group">
+                            <label>Team Size *</label>
+                            <input type="number" placeholder="e.g., 5">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Package Description</label>
+                        <textarea placeholder="Describe what's included in this package..."></textarea>
+                    </div>
+
+                    <div id="standardServices" class="dynamic-service-section">
+                        <h4>Selected Services Configuration</h4>
+                        <p style="color: #718096; font-size: 14px;">Configure sub-services and specifications for each selected service</p>
+                        <div id="standardServicesList"></div>
+                    </div>
+                </div>
+
+                <!-- Premium Package -->
+                <div id="premiumPackage" class="package-content">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Package Name *</label>
+                            <input type="text" placeholder="e.g., Premium Wedding Package" value="Premium Package">
+                        </div>
+                        <div class="form-group">
+                            <label>Base Price *</label>
+                            <input type="number" placeholder="₹ 100,000">
+                        </div>
+                        <div class="form-group">
+                            <label>Guest Capacity *</label>
+                            <input type="number" placeholder="e.g., 200">
+                        </div>
+                        <div class="form-group">
+                            <label>Team Size *</label>
+                            <input type="number" placeholder="e.g., 10">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Package Description</label>
+                        <textarea placeholder="Describe what's included in this package..."></textarea>
+                    </div>
+
+                    <div id="premiumServices" class="dynamic-service-section">
+                        <h4>Selected Services Configuration</h4>
+                        <p style="color: #718096; font-size: 14px;">Configure sub-services and specifications for each selected service</p>
+                        <div id="premiumServicesList"></div>
+                    </div>
+                </div>
+
+                <!-- Royal Package -->
+                <div id="royalPackage" class="package-content">
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Package Name *</label>
+                            <input type="text" placeholder="e.g., Royal Wedding Package" value="Royal Package">
+                        </div>
+                        <div class="form-group">
+                            <label>Base Price *</label>
+                            <input type="number" placeholder="₹ 200,000">
+                        </div>
+                        <div class="form-group">
+                            <label>Guest Capacity *</label>
+                            <input type="number" placeholder="e.g., 500">
+                        </div>
+                        <div class="form-group">
+                            <label>Team Size *</label>
+                            <input type="number" placeholder="e.g., 20">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label>Package Description</label>
+                        <textarea placeholder="Describe what's included in this package..."></textarea>
+                    </div>
+
+                    <div id="royalServices" class="dynamic-service-section">
+                        <h4>Selected Services Configuration</h4>
+                        <p style="color: #718096; font-size: 14px;">Configure sub-services and specifications for each selected service</p>
+                        <div id="royalServicesList"></div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>📷 Media Upload</h3>
+                <div class="media-upload" onclick="document.getElementById('venueMediaInput').click()">
+                    <p>📁 Click to upload images or videos</p>
+                    <small style="color: #718096;">Supported formats: JPG, PNG, MP4 (Max 10MB)</small>
+                    <input type="file" id="venueMediaInput" multiple accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(this, 'venue')">
+                </div>
+                <div id="venueMediaPreview" class="media-preview"></div>
+            </div>
+        </div>
+
+        <!-- Service Provider Form -->
+        <div id="serviceProviderForm" class="form-container">
+            <div class="alert alert-info">
+                <strong>Service Provider:</strong> Create a single main service with sub-services and specifications.
+            </div>
+
+            <div class="form-section">
+                <h3>📋 Basic Information</h3>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Service Name *</label>
+                        <input type="text" id="serviceName" placeholder="Enter service name" required>
+                    </div>
+                    <div class="form-group">
+                        <label>Contact Email *</label>
+                        <input type="email" id="serviceEmail" placeholder="contact@service.com" required>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description *</label>
+                    <textarea id="serviceDescription" placeholder="Describe your service and expertise..."></textarea>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>🎯 Main Service Selection</h3>
+                <div class="form-group">
+                    <label>Select Main Service Type *</label>
+                    <select id="mainServiceType" onchange="updateServiceSelection()">
+                        <option value="">-- Select Service --</option>
+                        <option value="DJ/MUSIC">🎵 DJ/MUSIC</option>
+                        <option value="Parking">🅿️ Parking</option>
+                        <option value="Catering">🍽️ Catering</option>
+                        <option value="Decoration">🎨 Decoration</option>
+                        <option value="Waiters">👔 Waiters</option>
+                        <option value="Accommodation">🏨 Accommodation</option>
+                        <option value="Stage">🎭 Stage</option>
+                        <option value="TableChairs">🪑 Table & Chairs</option>
+                        <option value="FoodStalls">🍕 Food Stalls</option>
+                        <option value="StageAndSheeting">⛺ Stage & Sheeting</option>
+                        <option value="PhotoVideoGraphy">📸 Photo/Video Graphy</option>
+                    </select>
+                </div>
+
+                <div class="row">
+                    <div class="form-group">
+                        <label>Base Price *</label>
+                        <input type="number" id="serviceBasePrice" placeholder="₹ 10,000">
+                    </div>
+                    <div class="form-group">
+                        <label>Guest Capacity *</label>
+                        <input type="number" id="serviceGuestCapacity" placeholder="e.g., 100">
+                    </div>
+                    <div class="form-group">
+                        <label>Team Size *</label>
+                        <input type="number" id="serviceTeamSize" placeholder="e.g., 3">
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-section">
+                <h3>🎁 Sub-Services</h3>
+                <p style="color: #718096; margin-bottom: 15px;">Add sub-services with pricing and specifications</p>
+                <div id="subServicesList">
+                    <!-- Sub-services will be added dynamically -->
+                </div>
+                <button type="button" class="btn btn-success btn-small" onclick="addSubService()">+ Add Sub-Service</button>
+            </div>
+
+            <div class="form-section">
+                <h3>📷 Media Upload</h3>
+                <div class="media-upload" onclick="document.getElementById('serviceMediaInput').click()">
+                    <p>📁 Click to upload images or videos</p>
+                    <small style="color: #718096;">Supported formats: JPG, PNG, MP4 (Max 10MB)</small>
+                    <input type="file" id="serviceMediaInput" multiple accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(this, 'service')">
+                </div>
+                <div id="serviceMediaPreview" class="media-preview"></div>
+            </div>
+        </div>
+
+        <div class="form-actions">
+            <button type="button" class="btn btn-secondary" onclick="saveDraft()">💾 Save as Draft</button>
+            <button type="button" class="btn btn-primary" onclick="submitListing()">🚀 Submit Listing</button>
+        </div>
+    </div>
+
+    <script>
+        let selectedVendorType = null;
+        let selectedServices = [];
+        let subServiceCounter = 0;
+
+        function selectVendorType(type) {
+            selectedVendorType = type;
+            
+            // Update button states
+            document.getElementById('venueProviderBtn').classList.remove('active');
+            document.getElementById('serviceProviderBtn').classList.remove('active');
+            
+            if (type === 'venue') {
+                document.getElementById('venueProviderBtn').classList.add('active');
+                document.getElementById('venueProviderForm').classList.add('active');
+                document.getElementById('serviceProviderForm').classList.remove('active');
+            } else {
+                document.getElementById('serviceProviderBtn').classList.add('active');
+                document.getElementById('serviceProviderForm').classList.add('active');
+                document.getElementById('venueProviderForm').classList.remove('active');
+            }
+        }
+
+        function toggleServiceCheckbox(checkbox) {
+            const parent = checkbox.parentElement;
+            if (checkbox.checked) {
+                parent.classList.add('checked');
+                selectedServices.push(checkbox.value);
+            } else {
+                parent.classList.remove('checked');
+                selectedServices = selectedServices.filter(s => s !== checkbox.value);
+            }
+            updatePackageServices();
+        }
+
+        function updatePackageServices() {
+            const packages = ['standard', 'premium', 'royal'];
+            packages.forEach(pkg => {
+                const container = document.getElementById(`${pkg}ServicesList`);
+                container.innerHTML = '';
+                
+                selectedServices.forEach(service => {
+                    const serviceDiv = document.createElement('div');
+                    serviceDiv.className = 'sub-service-item';
+                    serviceDiv.innerHTML = `
+                        <div class="main-service-header">
+                            <h4>${service}</h4>
+                            <button type="button" class="btn btn-success btn-small" onclick="addSubServiceToPackage('${pkg}', '${service}')">+ Add Sub-Service</button>
+                        </div>
+                        <div id="${pkg}_${service}_subservices"></div>
+                    `;
+                    container.appendChild(serviceDiv);
+                });
+            });
+        }
+
+        function addSubServiceToPackage(packageType, mainService) {
+            const container = document.getElementById(`${packageType}_${mainService}_subservices`);
+            const subServiceDiv = document.createElement('div');
+            subServiceDiv.className = 'sub-service-item';
+            subServiceDiv.style.background = '#f7fafc';
+            subServiceDiv.innerHTML = `
+                <div class="row">
+                    <div class="form-group">
+                        <label>Sub-Service Name</label>
+                        <input type="text" placeholder="e.g., Premium Sound System">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹)</label>
+                        <input type="number" placeholder="5,000">
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (hours)</label>
+                        <input type="number" placeholder="4">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea placeholder="Describe this sub-service..." rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox"> Included in Base Package
+                    </label>
+                    <label style="margin-left: 20px;">
+                        <input type="checkbox"> Popular Choice
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Specifications</label>
+                    <div class="specification-list" id="${packageType}_${mainService}_specs_${Date.now()}">
+                        <div class="specification-item">
+                            <input type="text" placeholder="e.g., 2000W Power Output">
+                            <button type="button" class="btn btn-success btn-small" onclick="addSpecification(this.parentElement.parentElement)">+</button>
+                        </div>
+                    </div>
+                </div>
+                <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.remove()">Remove Sub-Service</button>
+            `;
+            container.appendChild(subServiceDiv);
+        }
+
+        function switchPackageTab(packageType) {
+            // Update tabs
+            document.querySelectorAll('.package-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Update content
+            document.querySelectorAll('.package-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${packageType}Package`).classList.add('active');
+        }
+
+        function updateServiceSelection() {
+            const serviceType = document.getElementById('mainServiceType').value;
+            if (serviceType) {
+                console.log('Selected service:', serviceType);
+            }
+        }
+
+        function addSubService() {
+            subServiceCounter++;
+            const container = document.getElementById('subServicesList');
+            const subServiceDiv = document.createElement('div');
+            subServiceDiv.className = 'sub-service-item';
+            subServiceDiv.innerHTML = `
+                <div class="main-service-header">
+                    <h4>Sub-Service #${subServiceCounter}</h4>
+                    <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.parentElement.remove()">Remove</button>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label>Sub-Service Name *</label>
+                        <input type="text" placeholder="e.g., Wedding Photography">
+                    </div>
+                    <div class="form-group">
+                        <label>Price (₹) *</label>
+                        <input type="number" placeholder="15,000">
+                    </div>
+                    <div class="form-group">
+                        <label>Duration (hours) *</label>
+                        <input type="number" placeholder="6">
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <textarea placeholder="Describe this sub-service..." rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox"> Included in Base Package
+                    </label>
+                    <label style="margin-left: 20px;">
+                        <input type="checkbox"> Popular Choice
+                    </label>
+                </div>
+                <div class="form-group">
+                    <label>Specifications</label>
+                    <div class="specification-list">
+                        <div class="specification-item">
+                            <input type="text" placeholder="e.g., Professional DSLR Camera">
+                            <button type="button" class="btn btn-success btn-small" onclick="addSpecification(this.parentElement.parentElement)">+</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(subServiceDiv);
+        }
+
+        function addSpecification(container) {
+            const specItem = document.createElement('div');
+            specItem.className = 'specification-item';
+            specItem.innerHTML = `
+                <input type="text" placeholder="Add another specification">
+                <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.remove()">-</button>
+            `;
+            container.appendChild(specItem);
+        }
+
+        function handleMediaUpload(input, type) {
+            const files = input.files;
+            const previewContainer = document.getElementById(`${type}MediaPreview`);
+            
+            for (let file of files) {
+                if (file.type.startsWith('image/')) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const mediaItem = document.createElement('div');
+                        mediaItem.className = 'media-item';
+                        mediaItem.innerHTML = `
+                            <img src="${e.target.result}" alt="${file.name}">
+                            <button class="remove-media" onclick="this.parentElement.remove()">×</button>
+                        `;
+                        previewContainer.appendChild(mediaItem);
+                    };
+                    reader.readAsDataURL(file);
+                }
+            }
+        }
+
+        function saveDraft() {
+            alert('📝 Draft saved successfully! You can continue editing later.');
+            console.log('Saving draft for vendor type:', selectedVendorType);
+        }
+
+        function submitListing() {
+            if (!selectedVendorType) {
+                alert('⚠️ Please select a vendor type first!');
+                return;
+            }
+            
+            // Collect form data
+            const formData = {
+                vendorType: selectedVendorType,
+                timestamp: new Date().toISOString()
+            };
+            
+            if (selectedVendorType === 'venue') {
+                formData.venueName = document.getElementById('venueName').value;
+                formData.venueEmail = document.getElementById('venueEmail').value;
+                formData.description = document.getElementById('venueDescription').value;
+                formData.selectedServices = selectedServices;
+                // Add package data collection here
+            } else {
+                formData.serviceName = document.getElementById('serviceName').value;
+                formData.serviceEmail = document.getElementById('serviceEmail').value;
+                formData.description = document.getElementById('serviceDescription').value;
+                formData.mainService = document.getElementById('mainServiceType').value;
+                formData.basePrice = document.getElementById('serviceBasePrice').value;
+                formData.guestCapacity = document.getElementById('serviceGuestCapacity').value;
+                formData.teamSize = document.getElementById('serviceTeamSize').value;
+            }
+            
+            console.log('Submitting listing:', formData);
+            alert('🎉 Listing submitted successfully! Your listing is now pending approval.');
+        }
+
+        // Initialize with first sub-service for service provider
+        window.addEventListener('DOMContentLoaded', function() {
+            // You can add initialization code here
+        });
+    </script>
+</body>
+</html>
