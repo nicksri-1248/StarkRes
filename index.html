@@ -19,7 +19,7 @@
         }
 
         .container {
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
             background: white;
             border-radius: 12px;
@@ -150,45 +150,12 @@
             min-height: 100px;
         }
 
-        .services-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
-        }
-
-        .service-checkbox {
-            display: flex;
-            align-items: center;
-            padding: 12px;
-            background: white;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.3s ease;
-        }
-
-        .service-checkbox:hover {
-            border-color: black;
-            background: #f0f4ff;
-        }
-
-        .service-checkbox input[type="checkbox"] {
-            width: auto;
-            margin-right: 10px;
-            cursor: pointer;
-        }
-
-        .service-checkbox.checked {
-            border-color: black;
-            background: #f0f4ff;
-        }
-
         .package-tabs {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             border-bottom: 2px solid #e2e8f0;
+            flex-wrap: wrap;
         }
 
         .package-tab {
@@ -219,34 +186,203 @@
             display: block;
         }
 
-        .sub-service-item {
+        .row {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+
+        .alert {
             padding: 15px;
-            background: white;
-            border: 1px solid #e2e8f0;
             border-radius: 6px;
+            margin-bottom: 20px;
+        }
+
+        .alert-info {
+            background: #bee3f8;
+            color: #2c5282;
+            border-left: 4px solid #3182ce;
+        }
+
+        .badge {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 12px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        .badge-standard {
+            background: #fed7d7;
+            color: #c53030;
+        }
+
+        .badge-premium {
+            background: #feebc8;
+            color: #c05621;
+        }
+
+        .badge-royal {
+            background: #d6bcfa;
+            color: #6b46c1;
+        }
+
+        /* Accordion Styles */
+        .category-accordion {
+            margin-bottom: 15px;
+            border: 2px solid #e2e8f0;
+            border-radius: 8px;
+            overflow: hidden;
+            background: white;
+        }
+
+        .category-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+            background: #f7fafc;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            border-bottom: 2px solid transparent;
+        }
+
+        .category-header:hover {
+            background: #edf2f7;
+        }
+
+        .category-header.active {
+            background: #e6fffa;
+            border-bottom-color: black;
+        }
+
+        .category-title {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 16px;
+        }
+
+        .category-icon {
+            font-size: 24px;
+        }
+
+        .category-arrow {
+            font-size: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .category-header.active .category-arrow {
+            transform: rotate(180deg);
+        }
+
+        .category-content {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+
+        .category-content.active {
+            max-height: 5000px;
+            padding: 20px;
+        }
+
+        .services-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 12px;
+        }
+
+        .service-item {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .service-item.selected {
+            border-color: black;
+            background: #f0f4ff;
+        }
+
+        .service-checkbox-wrapper {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+        }
+
+        .service-checkbox-wrapper input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .service-checkbox-wrapper label {
+            cursor: pointer;
+            margin: 0;
+            font-weight: 500;
+            color: #2d3748;
+        }
+
+        .service-details {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e2e8f0;
+            display: none;
+        }
+
+        .service-details.active {
+            display: block;
+        }
+
+        .service-detail-group {
             margin-bottom: 15px;
         }
 
-        .sub-service-header {
-            display: flex;
-            justify-content: between;
-            align-items: center;
-            margin-bottom: 10px;
+        .service-detail-group label {
+            display: block;
+            margin-bottom: 6px;
+            color: #4a5568;
+            font-size: 13px;
+            font-weight: 500;
         }
 
-        .specification-list {
+        .service-detail-group input,
+        .service-detail-group textarea {
+            width: 100%;
+            padding: 8px 12px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+
+        .service-detail-group textarea {
+            min-height: 60px;
+            resize: vertical;
+        }
+
+        .specifications-container {
             margin-top: 10px;
         }
 
         .specification-item {
             display: flex;
-            gap: 10px;
-            margin-bottom: 10px;
+            gap: 8px;
+            margin-bottom: 8px;
             align-items: center;
         }
 
         .specification-item input {
             flex: 1;
+            padding: 6px 10px;
+            border: 1px solid #cbd5e0;
+            border-radius: 4px;
+            font-size: 13px;
         }
 
         .btn {
@@ -301,6 +437,11 @@
             font-size: 12px;
         }
 
+        .btn-mini {
+            padding: 4px 8px;
+            font-size: 11px;
+        }
+
         .form-actions {
             display: flex;
             gap: 15px;
@@ -309,112 +450,115 @@
             border-top: 2px solid #e9ecef;
         }
 
-        .row {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
+        .media-upload-container {
+            margin-top: 12px;
+            padding: 12px;
+            background: #edf2f7;
+            border-radius: 4px;
+            border: 1px dashed #cbd5e0;
         }
 
-        .alert {
-            padding: 15px;
-            border-radius: 6px;
-            margin-bottom: 20px;
-        }
-
-        .alert-info {
-            background: #bee3f8;
-            color: #2c5282;
-            border-left: 4px solid #3182ce;
-        }
-
-        .badge {
+        .media-upload-btn {
             display: inline-block;
-            padding: 4px 12px;
-            border-radius: 12px;
-            font-size: 12px;
-            font-weight: 600;
-            margin-left: 10px;
-        }
-
-        .badge-standard {
-            background: #fed7d7;
-            color: #c53030;
-        }
-
-        .badge-premium {
-            background: #feebc8;
-            color: #c05621;
-        }
-
-        .badge-royal {
-            background: #d6bcfa;
-            color: #6b46c1;
-        }
-
-        .dynamic-service-section {
-            margin-top: 20px;
-            padding: 20px;
-            background: white;
-            border-radius: 6px;
-            border: 2px dashed #e2e8f0;
-        }
-
-        .main-service-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 15px;
-            padding-bottom: 15px;
-            border-bottom: 2px solid #e2e8f0;
-        }
-
-        .media-upload {
-            padding: 20px;
-            border: 2px dashed #cbd5e0;
-            border-radius: 6px;
-            text-align: center;
+            padding: 8px 16px;
+            background: #4299e1;
+            color: white;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 13px;
             transition: all 0.3s ease;
         }
 
-        .media-upload:hover {
-            border-color: black;
-            background: #f0f4ff;
+        .media-upload-btn:hover {
+            background: #3182ce;
         }
 
         .media-preview {
             display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-            gap: 15px;
-            margin-top: 15px;
+            grid-template-columns: repeat(auto-fill, minmax(80px, 1fr));
+            gap: 8px;
+            margin-top: 10px;
         }
 
         .media-item {
             position: relative;
-            border-radius: 6px;
+            border-radius: 4px;
             overflow: hidden;
-            border: 2px solid #e2e8f0;
+            border: 1px solid #cbd5e0;
         }
 
         .media-item img {
             width: 100%;
-            height: 150px;
+            height: 80px;
             object-fit: cover;
         }
 
         .media-item .remove-media {
             position: absolute;
-            top: 5px;
-            right: 5px;
+            top: 2px;
+            right: 2px;
             background: #f56565;
             color: white;
             border: none;
             border-radius: 50%;
-            width: 25px;
-            height: 25px;
+            width: 20px;
+            height: 20px;
             cursor: pointer;
-            font-size: 16px;
+            font-size: 12px;
             line-height: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .add-custom-service {
+            margin-top: 15px;
+            padding: 15px;
+            background: #fff5e6;
+            border: 2px dashed #f59e0b;
+            border-radius: 6px;
+            text-align: center;
+        }
+
+        .custom-service-form {
+            margin-top: 15px;
+            padding: 15px;
+            background: white;
+            border: 2px solid #f59e0b;
+            border-radius: 6px;
+            display: none;
+        }
+
+        .custom-service-form.active {
+            display: block;
+        }
+
+        .package-services-container {
+            margin-top: 20px;
+        }
+
+        .selected-services-count {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-left: 8px;
+        }
+
+        .service-media-section {
+            margin-top: 10px;
+            padding: 10px;
+            background: #f7fafc;
+            border-radius: 4px;
+        }
+
+        .service-media-label {
+            font-size: 12px;
+            color: #4a5568;
+            margin-bottom: 6px;
+            display: block;
         }
     </style>
 </head>
@@ -442,7 +586,7 @@
         <!-- Venue Provider Form -->
         <div id="venueProviderForm" class="form-container">
             <div class="alert alert-info">
-                <strong>Venue Provider:</strong> Select multiple services and create three packages (Standard, Premium, Royal) for your venue.
+                <strong>Venue Provider:</strong> Fill in basic information, then configure facilities for each package (Standard, Premium, Royal).
             </div>
 
             <div class="form-section">
@@ -464,69 +608,18 @@
             </div>
 
             <div class="form-section">
-                <h3>🎯 Select Services Available at Your Venue</h3>
-                <p style="color: #718096; margin-bottom: 15px;">Choose all services that your venue provides</p>
-                <div class="services-grid">
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="DJ/MUSIC" onchange="toggleServiceCheckbox(this)">
-                        <span>🎵 DJ/MUSIC</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="Parking" onchange="toggleServiceCheckbox(this)">
-                        <span>🅿️ Parking</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="Catering" onchange="toggleServiceCheckbox(this)">
-                        <span>🍽️ Catering</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="Decoration" onchange="toggleServiceCheckbox(this)">
-                        <span>🎨 Decoration</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="Waiters" onchange="toggleServiceCheckbox(this)">
-                        <span>👔 Waiters</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="Accommodation" onchange="toggleServiceCheckbox(this)">
-                        <span>🏨 Accommodation</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="Stage" onchange="toggleServiceCheckbox(this)">
-                        <span>🎭 Stage</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="TableChairs" onchange="toggleServiceCheckbox(this)">
-                        <span>🪑 Table & Chairs</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="FoodStalls" onchange="toggleServiceCheckbox(this)">
-                        <span>🍕 Food Stalls</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="StageAndSheeting" onchange="toggleServiceCheckbox(this)">
-                        <span>⛺ Stage & Sheeting</span>
-                    </label>
-                    <label class="service-checkbox">
-                        <input type="checkbox" name="venueService" value="PhotoVideoGraphy" onchange="toggleServiceCheckbox(this)">
-                        <span>📸 Photo/Video Graphy</span>
-                    </label>
-                </div>
-            </div>
-
-            <div class="form-section">
-                <h3>📦 Create Packages</h3>
-                <p style="color: #718096; margin-bottom: 15px;">Define three package tiers for your venue with selected services</p>
+                <h3>📦 Configure Packages</h3>
+                <p style="color: #718096; margin-bottom: 15px;">Define three package tiers for your venue with facilities and services</p>
                 
                 <div class="package-tabs">
                     <button class="package-tab active" onclick="switchPackageTab('standard')">
-                        Standard <span class="badge badge-standard">STANDARD</span>
+                        🌿 Standard <span class="badge badge-standard">BUDGET</span>
                     </button>
                     <button class="package-tab" onclick="switchPackageTab('premium')">
-                        Premium <span class="badge badge-premium">PREMIUM</span>
+                        💎 Premium <span class="badge badge-premium">COMFORT</span>
                     </button>
                     <button class="package-tab" onclick="switchPackageTab('royal')">
-                        Royal <span class="badge badge-royal">ROYAL</span>
+                        👑 Royal <span class="badge badge-royal">LUXURY</span>
                     </button>
                 </div>
 
@@ -535,30 +628,29 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Package Name *</label>
-                            <input type="text" placeholder="e.g., Standard Wedding Package" value="Standard Package">
+                            <input type="text" id="standard_name" placeholder="e.g., Standard Wedding Package" value="Standard Package">
                         </div>
                         <div class="form-group">
                             <label>Base Price *</label>
-                            <input type="number" placeholder="₹ 50,000">
+                            <input type="number" id="standard_price" placeholder="₹ 50,000">
                         </div>
                         <div class="form-group">
                             <label>Guest Capacity *</label>
-                            <input type="number" placeholder="e.g., 100">
+                            <input type="text" id="standard_capacity" placeholder="e.g., 100-300">
                         </div>
                         <div class="form-group">
                             <label>Team Size *</label>
-                            <input type="number" placeholder="e.g., 5">
+                            <input type="number" id="standard_team" placeholder="e.g., 3">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Package Description</label>
-                        <textarea placeholder="Describe what's included in this package..."></textarea>
+                        <textarea id="standard_description" placeholder="Perfect for family functions, birthdays, engagements & local events..."></textarea>
                     </div>
 
-                    <div id="standardServices" class="dynamic-service-section">
-                        <h4>Selected Services Configuration</h4>
-                        <p style="color: #718096; font-size: 14px;">Configure sub-services and specifications for each selected service</p>
-                        <div id="standardServicesList"></div>
+                    <div class="package-services-container">
+                        <h4 style="margin-bottom: 15px;">Select Facilities & Services for Standard Package</h4>
+                        <div id="standardCategoriesContainer"></div>
                     </div>
                 </div>
 
@@ -567,30 +659,29 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Package Name *</label>
-                            <input type="text" placeholder="e.g., Premium Wedding Package" value="Premium Package">
+                            <input type="text" id="premium_name" placeholder="e.g., Premium Wedding Package" value="Premium Package">
                         </div>
                         <div class="form-group">
                             <label>Base Price *</label>
-                            <input type="number" placeholder="₹ 100,000">
+                            <input type="number" id="premium_price" placeholder="₹ 100,000">
                         </div>
                         <div class="form-group">
                             <label>Guest Capacity *</label>
-                            <input type="number" placeholder="e.g., 200">
+                            <input type="text" id="premium_capacity" placeholder="e.g., 300-700">
                         </div>
                         <div class="form-group">
                             <label>Team Size *</label>
-                            <input type="number" placeholder="e.g., 10">
+                            <input type="number" id="premium_team" placeholder="e.g., 6">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Package Description</label>
-                        <textarea placeholder="Describe what's included in this package..."></textarea>
+                        <textarea id="premium_description" placeholder="For weddings, receptions, corporate events, and luxury parties..."></textarea>
                     </div>
 
-                    <div id="premiumServices" class="dynamic-service-section">
-                        <h4>Selected Services Configuration</h4>
-                        <p style="color: #718096; font-size: 14px;">Configure sub-services and specifications for each selected service</p>
-                        <div id="premiumServicesList"></div>
+                    <div class="package-services-container">
+                        <h4 style="margin-bottom: 15px;">Select Facilities & Services for Premium Package</h4>
+                        <div id="premiumCategoriesContainer"></div>
                     </div>
                 </div>
 
@@ -599,42 +690,31 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Package Name *</label>
-                            <input type="text" placeholder="e.g., Royal Wedding Package" value="Royal Package">
+                            <input type="text" id="royal_name" placeholder="e.g., Royal Wedding Package" value="Royal Package">
                         </div>
                         <div class="form-group">
                             <label>Base Price *</label>
-                            <input type="number" placeholder="₹ 200,000">
+                            <input type="number" id="royal_price" placeholder="₹ 200,000">
                         </div>
                         <div class="form-group">
                             <label>Guest Capacity *</label>
-                            <input type="number" placeholder="e.g., 500">
+                            <input type="text" id="royal_capacity" placeholder="e.g., 700-2000+">
                         </div>
                         <div class="form-group">
                             <label>Team Size *</label>
-                            <input type="number" placeholder="e.g., 20">
+                            <input type="number" id="royal_team" placeholder="e.g., 12">
                         </div>
                     </div>
                     <div class="form-group">
                         <label>Package Description</label>
-                        <textarea placeholder="Describe what's included in this package..."></textarea>
+                        <textarea id="royal_description" placeholder="For grand weddings, corporate galas, concerts & VIP events..."></textarea>
                     </div>
 
-                    <div id="royalServices" class="dynamic-service-section">
-                        <h4>Selected Services Configuration</h4>
-                        <p style="color: #718096; font-size: 14px;">Configure sub-services and specifications for each selected service</p>
-                        <div id="royalServicesList"></div>
+                    <div class="package-services-container">
+                        <h4 style="margin-bottom: 15px;">Select Facilities & Services for Royal Package</h4>
+                        <div id="royalCategoriesContainer"></div>
                     </div>
                 </div>
-            </div>
-
-            <div class="form-section">
-                <h3>📷 Media Upload</h3>
-                <div class="media-upload" onclick="document.getElementById('venueMediaInput').click()">
-                    <p>📁 Click to upload images or videos</p>
-                    <small style="color: #718096;">Supported formats: JPG, PNG, MP4 (Max 10MB)</small>
-                    <input type="file" id="venueMediaInput" multiple accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(this, 'venue')">
-                </div>
-                <div id="venueMediaPreview" class="media-preview"></div>
             </div>
         </div>
 
@@ -666,7 +746,7 @@
                 <h3>🎯 Main Service Selection</h3>
                 <div class="form-group">
                     <label>Select Main Service Type *</label>
-                    <select id="mainServiceType" onchange="updateServiceSelection()">
+                    <select id="mainServiceType">
                         <option value="">-- Select Service --</option>
                         <option value="DJ/MUSIC">🎵 DJ/MUSIC</option>
                         <option value="Parking">🅿️ Parking</option>
@@ -701,20 +781,8 @@
             <div class="form-section">
                 <h3>🎁 Sub-Services</h3>
                 <p style="color: #718096; margin-bottom: 15px;">Add sub-services with pricing and specifications</p>
-                <div id="subServicesList">
-                    <!-- Sub-services will be added dynamically -->
-                </div>
+                <div id="subServicesList"></div>
                 <button type="button" class="btn btn-success btn-small" onclick="addSubService()">+ Add Sub-Service</button>
-            </div>
-
-            <div class="form-section">
-                <h3>📷 Media Upload</h3>
-                <div class="media-upload" onclick="document.getElementById('serviceMediaInput').click()">
-                    <p>📁 Click to upload images or videos</p>
-                    <small style="color: #718096;">Supported formats: JPG, PNG, MP4 (Max 10MB)</small>
-                    <input type="file" id="serviceMediaInput" multiple accept="image/*,video/*" style="display: none;" onchange="handleMediaUpload(this, 'service')">
-                </div>
-                <div id="serviceMediaPreview" class="media-preview"></div>
             </div>
         </div>
 
@@ -726,13 +794,233 @@
 
     <script>
         let selectedVendorType = null;
-        let selectedServices = [];
+        let customServiceCounter = 0;
         let subServiceCounter = 0;
+        
+        // Package-specific selected services
+        let packageServices = {
+            standard: {},
+            premium: {},
+            royal: {}
+        };
+
+        // Comprehensive facility/service data structure
+        const facilitiesData = {
+            "A. Outdoor Facilities": {
+                icon: "🏞️",
+                facilities: [
+                    { id: "garden_lawn", name: "Garden / Lawn area" },
+                    { id: "stage_area", name: "Stage area (open-air)" },
+                    { id: "waterproof_shade", name: "Waterproof Shade / German Tent setup" },
+                    { id: "fountain", name: "Fountain / Water body area" },
+                    { id: "pathway_lighting", name: "Pathway lighting" },
+                    { id: "decorative_entrance", name: "Decorative Entrance gate" },
+                    { id: "boundary_wall", name: "Boundary wall / fencing" },
+                    { id: "parking_2w", name: "Parking space (2-wheeler)" },
+                    { id: "parking_4w", name: "Parking space (4-wheeler)" },
+                    { id: "parking_bus", name: "Parking space (Bus)" },
+                    { id: "driveway_lighting", name: "Driveway with lighting" },
+                    { id: "fire_hydrants", name: "Fire safety hydrants" },
+                    { id: "landscaped_garden", name: "Landscaped garden with trees" },
+                    { id: "outdoor_washroom", name: "Outdoor washroom block" },
+                    { id: "open_kitchen", name: "Open kitchen / catering zone" },
+                    { id: "open_dance_floor", name: "Open dance floor / DJ zone" },
+                    { id: "rain_shelter", name: "Rain shelter area" },
+                    { id: "gazebo", name: "Gazebo / resting huts" }
+                ]
+            },
+            "B. Indoor Facilities": {
+                icon: "🏠",
+                facilities: [
+                    { id: "banquet_hall", name: "Banquet Hall / Function Hall" },
+                    { id: "ac_central", name: "Central / Split AC" },
+                    { id: "waterproof_roof", name: "Waterproof roofing" },
+                    { id: "soundproof_walls", name: "Soundproof hall walls" },
+                    { id: "changing_rooms", name: "Changing rooms (Bride & Groom)" },
+                    { id: "vip_lounge", name: "VIP Lounge / Green Room" },
+                    { id: "stage_indoor", name: "Stage setup area inside" },
+                    { id: "elevator", name: "Lift / Elevator (if multi-floor)" },
+                    { id: "flooring", name: "Wooden / Marble flooring" },
+                    { id: "ceiling_hooks", name: "Decor-ready ceiling hooks" },
+                    { id: "fire_exit", name: "Fire exit signs" },
+                    { id: "smoke_detectors", name: "Smoke detectors" },
+                    { id: "fire_extinguishers", name: "Fire extinguishers" },
+                    { id: "indoor_washrooms", name: "Indoor washrooms" },
+                    { id: "reception_counter", name: "Reception counter area" },
+                    { id: "gift_desk", name: "Guest registration / gift desk" },
+                    { id: "waiting_lounge", name: "Waiting lounge" },
+                    { id: "cloak_room", name: "Cloak room" },
+                    { id: "stay_rooms", name: "Resting room / stay rooms" }
+                ]
+            },
+            "C. Power & Utilities": {
+                icon: "⚡",
+                facilities: [
+                    { id: "generator_62", name: "Generator (62 KVA)" },
+                    { id: "generator_82", name: "Generator (82 KVA)" },
+                    { id: "generator_125", name: "Generator (125 KVA)" },
+                    { id: "inverter_backup", name: "Inverter backup" },
+                    { id: "electrical_outlets", name: "Electrical outlets (multiple)" },
+                    { id: "industrial_power", name: "Industrial load power connection" },
+                    { id: "spotlights", name: "Spotlights & LED lights" },
+                    { id: "decorative_lights", name: "Decorative lights" },
+                    { id: "emergency_lighting", name: "Emergency lighting" },
+                    { id: "fans_coolers", name: "Fans / Coolers / ACs" },
+                    { id: "extension_boards", name: "Extension boards & cables" },
+                    { id: "water_supply", name: "Water supply system" },
+                    { id: "ro_water", name: "RO / Filtered water for guests" },
+                    { id: "borewell", name: "Borewell or tank backup" }
+                ]
+            },
+            "D. Furniture & Setup": {
+                icon: "🪑",
+                facilities: [
+                    { id: "banquet_chairs", name: "Banquet chairs (standard)" },
+                    { id: "cushion_chairs", name: "Cushion chairs" },
+                    { id: "dining_tables", name: "Dining tables (round/rectangular)" },
+                    { id: "table_covers", name: "Table covers & chair covers" },
+                    { id: "stage_furniture", name: "Stage furniture (sofa, table, backdrop)" },
+                    { id: "mandap_base", name: "Mandap base frame" },
+                    { id: "buffet_counter", name: "Buffet counter base" },
+                    { id: "cocktail_bar", name: "Cocktail bar counter base" },
+                    { id: "dj_table", name: "DJ table / riser" },
+                    { id: "selfie_point", name: "Selfie point frame" },
+                    { id: "sofa_vip", name: "Sofa sets for VIPs" },
+                    { id: "carpet", name: "Carpet / mats" },
+                    { id: "wedding_throne", name: "Wedding throne / chairs" },
+                    { id: "flower_stands", name: "Flower pot stands" },
+                    { id: "podium", name: "Podium / mike stand" },
+                    { id: "food_stall_frames", name: "Food stall partition frames" }
+                ]
+            },
+            "E. Sound, Light & Tech": {
+                icon: "🎶",
+                facilities: [
+                    { id: "sound_system", name: "Inbuilt sound system" },
+                    { id: "dj_space", name: "DJ space with electrical fitting" },
+                    { id: "led_screen", name: "LED screen / Projector facility" },
+                    { id: "lighting_truss", name: "Lighting truss setup points" },
+                    { id: "decor_spotlights", name: "Decorative spotlights" },
+                    { id: "dimmer_lights", name: "Dimmer light system" },
+                    { id: "mic_support", name: "Wired / wireless mic support" },
+                    { id: "cctv", name: "CCTV cameras" },
+                    { id: "wifi", name: "Wi-Fi access (guest & staff)" },
+                    { id: "music_license", name: "Music license (if required)" },
+                    { id: "announcement_speaker", name: "Announcement speaker system" }
+                ]
+            },
+            "F. Decoration & Theme Ready": {
+                icon: "🎨",
+                facilities: [
+                    { id: "decor_hooks", name: "Decor support hooks" },
+                    { id: "ceiling_hang", name: "Ceiling hang points" },
+                    { id: "mandap_frame", name: "Mandap / Stage decor-ready frame" },
+                    { id: "flower_decor", name: "Flower décor area provision" },
+                    { id: "photo_backdrop", name: "Photo backdrop wall" },
+                    { id: "arch_gate", name: "Arch gate area" },
+                    { id: "rangoli_area", name: "Rangoli / entry area space" },
+                    { id: "led_string", name: "LED string light outlets" },
+                    { id: "curtain_rail", name: "Curtain rail setup" },
+                    { id: "inhouse_decor", name: "In-house decoration team" }
+                ]
+            },
+            "G. Maintenance & Management": {
+                icon: "🧹",
+                facilities: [
+                    { id: "cleaning_staff", name: "Cleaning staff pre/post event" },
+                    { id: "onsite_manager", name: "On-site manager" },
+                    { id: "coordination_room", name: "Event coordination room" },
+                    { id: "housekeeping_staff", name: "Housekeeping staff" },
+                    { id: "washroom_cleaning", name: "Washroom cleaning crew" },
+                    { id: "security_guards", name: "Security guards" },
+                    { id: "generator_operator", name: "Generator operator" },
+                    { id: "electrician", name: "Electrician on duty" },
+                    { id: "fire_safety_officer", name: "Fire safety officer" },
+                    { id: "cctv_monitoring", name: "CCTV monitoring room" },
+                    { id: "waste_disposal", name: "Waste disposal area" },
+                    { id: "sewage_system", name: "Sewage / drainage system" }
+                ]
+            },
+            "H. Guest Facilities": {
+                icon: "🧑‍🤝‍🧑",
+                facilities: [
+                    { id: "washrooms", name: "Washrooms (Male/Female/Staff)" },
+                    { id: "drinking_water", name: "Drinking water points" },
+                    { id: "first_aid", name: "First aid kit" },
+                    { id: "wheelchair_access", name: "Wheelchair accessibility" },
+                    { id: "baby_changing", name: "Baby changing area" },
+                    { id: "luggage_area", name: "Luggage holding area" },
+                    { id: "lost_found", name: "Lost & found desk" },
+                    { id: "emergency_exit", name: "Emergency exit signage" },
+                    { id: "accommodation", name: "Room stay / accommodation" },
+                    { id: "room_service", name: "Room service (if hotel/resort)" },
+                    { id: "help_desk", name: "24x7 help desk" },
+                    { id: "waiting_seating", name: "Waiting area with seating" }
+                ]
+            },
+            "I. Catering & Kitchen Zone": {
+                icon: "🍛",
+                facilities: [
+                    { id: "catering_area", name: "Dedicated catering area" },
+                    { id: "kitchen_shed", name: "Open / Closed kitchen shed" },
+                    { id: "water_sink", name: "Water point & sink" },
+                    { id: "gas_connection", name: "Gas pipeline / connection area" },
+                    { id: "waste_unit", name: "Food waste disposal unit" },
+                    { id: "handwash", name: "Hand wash stations" },
+                    { id: "cold_storage", name: "Ice box / cold storage room" },
+                    { id: "plating_counter", name: "Food plating counters" },
+                    { id: "pantry", name: "Pantry / storage racks" },
+                    { id: "service_staff_space", name: "Service staff space" },
+                    { id: "catering_parking", name: "Catering parking zone" }
+                ]
+            },
+            "J. Parking & Entry": {
+                icon: "🅿️",
+                facilities: [
+                    { id: "separate_entry", name: "Separate entry for guests & staff" },
+                    { id: "exit_gate", name: "Exit gate / emergency gate" },
+                    { id: "covered_parking", name: "Covered parking" },
+                    { id: "parking_lighting", name: "Parking lighting" },
+                    { id: "valet_service", name: "Valet service area" },
+                    { id: "driver_room", name: "Driver waiting room" },
+                    { id: "security_cabin", name: "Security cabin at entry" },
+                    { id: "welcome_arch", name: "Guest welcome arch" }
+                ]
+            },
+            "K. Extra Premium Add-ons": {
+                icon: "🏨",
+                facilities: [
+                    { id: "stay_rooms_premium", name: "Rooms for stay (AC/Deluxe/Dormitory)" },
+                    { id: "swimming_pool", name: "Swimming pool access" },
+                    { id: "poolside", name: "Poolside party area" },
+                    { id: "kids_play", name: "Kids play area" },
+                    { id: "gym", name: "Gym / fitness room" },
+                    { id: "game_zone", name: "Game zone" },
+                    { id: "rooftop", name: "Rooftop dining area" },
+                    { id: "conference", name: "Conference room" },
+                    { id: "lounge_bar", name: "Lounge / bar area" },
+                    { id: "spa", name: "Spa room" },
+                    { id: "rain_dance", name: "Rain dance area" },
+                    { id: "mini_theatre", name: "Mini theatre / projector hall" }
+                ]
+            },
+            "L. Administrative & Booking": {
+                icon: "📦",
+                facilities: [
+                    { id: "online_booking", name: "Online booking support" },
+                    { id: "payment_gateway", name: "Payment gateway setup" },
+                    { id: "billing_area", name: "Invoicing / billing area" },
+                    { id: "contract_counter", name: "Contract / document counter" },
+                    { id: "display_board", name: "Digital display board" },
+                    { id: "wifi_checkin", name: "Wi-Fi enabled check-in system" },
+                    { id: "cctv_archive", name: "CCTV recording archive room" }
+                ]
+            }
+        };
 
         function selectVendorType(type) {
             selectedVendorType = type;
             
-            // Update button states
             document.getElementById('venueProviderBtn').classList.remove('active');
             document.getElementById('serviceProviderBtn').classList.remove('active');
             
@@ -740,6 +1028,7 @@
                 document.getElementById('venueProviderBtn').classList.add('active');
                 document.getElementById('venueProviderForm').classList.add('active');
                 document.getElementById('serviceProviderForm').classList.remove('active');
+                initializePackageCategories();
             } else {
                 document.getElementById('serviceProviderBtn').classList.add('active');
                 document.getElementById('serviceProviderForm').classList.add('active');
@@ -747,164 +1036,297 @@
             }
         }
 
-        function toggleServiceCheckbox(checkbox) {
-            const parent = checkbox.parentElement;
-            if (checkbox.checked) {
-                parent.classList.add('checked');
-                selectedServices.push(checkbox.value);
-            } else {
-                parent.classList.remove('checked');
-                selectedServices = selectedServices.filter(s => s !== checkbox.value);
-            }
-            updatePackageServices();
-        }
-
-        function updatePackageServices() {
+        function initializePackageCategories() {
             const packages = ['standard', 'premium', 'royal'];
             packages.forEach(pkg => {
-                const container = document.getElementById(`${pkg}ServicesList`);
-                container.innerHTML = '';
-                
-                selectedServices.forEach(service => {
-                    const serviceDiv = document.createElement('div');
-                    serviceDiv.className = 'sub-service-item';
-                    serviceDiv.innerHTML = `
-                        <div class="main-service-header">
-                            <h4>${service}</h4>
-                            <button type="button" class="btn btn-success btn-small" onclick="addSubServiceToPackage('${pkg}', '${service}')">+ Add Sub-Service</button>
-                        </div>
-                        <div id="${pkg}_${service}_subservices"></div>
-                    `;
-                    container.appendChild(serviceDiv);
-                });
+                loadCategoriesForPackage(pkg);
             });
         }
 
-        function addSubServiceToPackage(packageType, mainService) {
-            const container = document.getElementById(`${packageType}_${mainService}_subservices`);
-            const subServiceDiv = document.createElement('div');
-            subServiceDiv.className = 'sub-service-item';
-            subServiceDiv.style.background = '#f7fafc';
-            subServiceDiv.innerHTML = `
-                <div class="row">
-                    <div class="form-group">
-                        <label>Sub-Service Name</label>
-                        <input type="text" placeholder="e.g., Premium Sound System">
+        function loadCategoriesForPackage(packageType) {
+            const container = document.getElementById(`${packageType}CategoriesContainer`);
+            container.innerHTML = '';
+            
+            // Initialize package services object
+            if (!packageServices[packageType]) {
+                packageServices[packageType] = {};
+            }
+
+            Object.keys(facilitiesData).forEach((category, categoryIndex) => {
+                const categoryData = facilitiesData[category];
+                const categoryId = `${packageType}_category_${categoryIndex}`;
+                
+                const accordion = document.createElement('div');
+                accordion.className = 'category-accordion';
+                accordion.innerHTML = `
+                    <div class="category-header" onclick="toggleCategory('${categoryId}')">
+                        <div class="category-title">
+                            <span class="category-icon">${categoryData.icon}</span>
+                            <span>${category}</span>
+                            <span class="selected-services-count" id="${categoryId}_count">0 selected</span>
+                        </div>
+                        <span class="category-arrow">▼</span>
                     </div>
-                    <div class="form-group">
-                        <label>Price (₹)</label>
-                        <input type="number" placeholder="5,000">
-                    </div>
-                    <div class="form-group">
-                        <label>Duration (hours)</label>
-                        <input type="number" placeholder="4">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea placeholder="Describe this sub-service..." rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox"> Included in Base Package
-                    </label>
-                    <label style="margin-left: 20px;">
-                        <input type="checkbox"> Popular Choice
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Specifications</label>
-                    <div class="specification-list" id="${packageType}_${mainService}_specs_${Date.now()}">
-                        <div class="specification-item">
-                            <input type="text" placeholder="e.g., 2000W Power Output">
-                            <button type="button" class="btn btn-success btn-small" onclick="addSpecification(this.parentElement.parentElement)">+</button>
+                    <div class="category-content" id="${categoryId}">
+                        <div class="services-list" id="${categoryId}_services"></div>
+                        <div class="add-custom-service">
+                            <button type="button" class="btn btn-success btn-small" onclick="showCustomServiceForm('${packageType}', '${category}', '${categoryId}')">
+                                ➕ Add Custom Service (Not in List)
+                            </button>
+                        </div>
+                        <div class="custom-service-form" id="${categoryId}_custom">
+                            <h5 style="margin-bottom: 10px;">Add Custom Service</h5>
+                            <div class="service-detail-group">
+                                <label>Service Name *</label>
+                                <input type="text" id="${categoryId}_custom_name" placeholder="Enter custom service name">
+                            </div>
+                            <div style="display: flex; gap: 10px; margin-top: 10px;">
+                                <button type="button" class="btn btn-primary btn-small" onclick="addCustomService('${packageType}', '${category}', '${categoryId}')">Add Service</button>
+                                <button type="button" class="btn btn-secondary btn-small" onclick="hideCustomServiceForm('${categoryId}')">Cancel</button>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.remove()">Remove Sub-Service</button>
-            `;
-            container.appendChild(subServiceDiv);
+                `;
+                
+                container.appendChild(accordion);
+                
+                // Load facilities for this category
+                loadFacilitiesForCategory(packageType, category, categoryId, categoryData.facilities);
+            });
         }
 
-        function switchPackageTab(packageType) {
-            // Update tabs
-            document.querySelectorAll('.package-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.classList.add('active');
+        function loadFacilitiesForCategory(packageType, category, categoryId, facilities) {
+            const servicesContainer = document.getElementById(`${categoryId}_services`);
             
-            // Update content
-            document.querySelectorAll('.package-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(`${packageType}Package`).classList.add('active');
+            facilities.forEach(facility => {
+                const serviceId = `${packageType}_${facility.id}`;
+                const serviceItem = document.createElement('div');
+                serviceItem.className = 'service-item';
+                serviceItem.id = `${serviceId}_item`;
+                
+                serviceItem.innerHTML = `
+                    <div class="service-checkbox-wrapper">
+                        <input type="checkbox" 
+                               id="${serviceId}_checkbox" 
+                               onchange="toggleServiceSelection('${packageType}', '${facility.id}', '${facility.name}', '${categoryId}', '${serviceId}')">
+                        <label for="${serviceId}_checkbox">${facility.name}</label>
+                    </div>
+                    <div class="service-details" id="${serviceId}_details">
+                        <div class="service-detail-group">
+                            <label>Quantity / Capacity</label>
+                            <input type="text" id="${serviceId}_quantity" placeholder="e.g., 200 chairs, 1 unit, etc.">
+                        </div>
+                        <div class="service-detail-group">
+                            <label>Quality / Type</label>
+                            <input type="text" id="${serviceId}_quality" placeholder="e.g., Standard, Premium, Luxury">
+                        </div>
+                        <div class="service-detail-group">
+                            <label>Price (₹)</label>
+                            <input type="number" id="${serviceId}_price" placeholder="Enter price (0 if included)">
+                        </div>
+                        <div class="service-detail-group">
+                            <label>Description</label>
+                            <textarea id="${serviceId}_description" placeholder="Additional details about this service..." rows="2"></textarea>
+                        </div>
+                        <div class="service-detail-group">
+                            <label>Specifications</label>
+                            <div class="specifications-container" id="${serviceId}_specs">
+                                <div class="specification-item">
+                                    <input type="text" placeholder="Add specification...">
+                                    <button type="button" class="btn btn-success btn-mini" onclick="addSpecification('${serviceId}_specs')">+</button>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="service-media-section">
+                            <label class="service-media-label">📸 Upload Images/Videos for this service</label>
+                            <div class="media-upload-btn" onclick="document.getElementById('${serviceId}_media').click()">
+                                📁 Upload Media
+                            </div>
+                            <input type="file" id="${serviceId}_media" multiple accept="image/*,video/*" style="display: none;" onchange="handleServiceMediaUpload('${serviceId}', this)">
+                            <div class="media-preview" id="${serviceId}_media_preview"></div>
+                        </div>
+                    </div>
+                `;
+                
+                servicesContainer.appendChild(serviceItem);
+            });
         }
 
-        function updateServiceSelection() {
-            const serviceType = document.getElementById('mainServiceType').value;
-            if (serviceType) {
-                console.log('Selected service:', serviceType);
+        function toggleCategory(categoryId) {
+            const header = document.querySelector(`#${categoryId}`).previousElementSibling;
+            const content = document.getElementById(categoryId);
+            
+            header.classList.toggle('active');
+            content.classList.toggle('active');
+        }
+
+        function toggleServiceSelection(packageType, facilityId, facilityName, categoryId, serviceId) {
+            const checkbox = document.getElementById(`${serviceId}_checkbox`);
+            const serviceItem = document.getElementById(`${serviceId}_item`);
+            const detailsDiv = document.getElementById(`${serviceId}_details`);
+            
+            if (checkbox.checked) {
+                serviceItem.classList.add('selected');
+                detailsDiv.classList.add('active');
+                
+                // Initialize service data
+                if (!packageServices[packageType][categoryId]) {
+                    packageServices[packageType][categoryId] = [];
+                }
+                
+                packageServices[packageType][categoryId].push({
+                    id: facilityId,
+                    name: facilityName,
+                    serviceId: serviceId
+                });
+            } else {
+                serviceItem.classList.remove('selected');
+                detailsDiv.classList.remove('active');
+                
+                // Remove from packageServices
+                if (packageServices[packageType][categoryId]) {
+                    packageServices[packageType][categoryId] = packageServices[packageType][categoryId].filter(
+                        s => s.id !== facilityId
+                    );
+                }
+            }
+            
+            updateCategoryCount(categoryId, packageType);
+        }
+
+        function updateCategoryCount(categoryId, packageType) {
+            const countElement = document.getElementById(`${categoryId}_count`);
+            const servicesContainer = document.getElementById(`${categoryId}_services`);
+            const selectedCount = servicesContainer.querySelectorAll('.service-item.selected').length;
+            
+            countElement.textContent = `${selectedCount} selected`;
+        }
+
+        function showCustomServiceForm(packageType, category, categoryId) {
+            const form = document.getElementById(`${categoryId}_custom`);
+            form.classList.add('active');
+        }
+
+        function hideCustomServiceForm(categoryId) {
+            const form = document.getElementById(`${categoryId}_custom`);
+            form.classList.remove('active');
+            document.getElementById(`${categoryId}_custom_name`).value = '';
+        }
+
+        function addCustomService(packageType, category, categoryId) {
+            const nameInput = document.getElementById(`${categoryId}_custom_name`);
+            const serviceName = nameInput.value.trim();
+            
+            if (!serviceName) {
+                alert('Please enter a service name');
+                return;
+            }
+            
+            customServiceCounter++;
+            const customId = `custom_${customServiceCounter}`;
+            const serviceId = `${packageType}_${customId}`;
+            
+            const servicesContainer = document.getElementById(`${categoryId}_services`);
+            const serviceItem = document.createElement('div');
+            serviceItem.className = 'service-item selected';
+            serviceItem.id = `${serviceId}_item`;
+            
+            serviceItem.innerHTML = `
+                <div class="service-checkbox-wrapper">
+                    <input type="checkbox" 
+                           id="${serviceId}_checkbox" 
+                           checked
+                           onchange="toggleServiceSelection('${packageType}', '${customId}', '${serviceName}', '${categoryId}', '${serviceId}')">
+                    <label for="${serviceId}_checkbox">${serviceName} <span style="color: #f59e0b; font-size: 11px;">(Custom)</span></label>
+                </div>
+                <div class="service-details active" id="${serviceId}_details">
+                    <div class="service-detail-group">
+                        <label>Quantity / Capacity</label>
+                        <input type="text" id="${serviceId}_quantity" placeholder="e.g., 200 chairs, 1 unit, etc.">
+                    </div>
+                    <div class="service-detail-group">
+                        <label>Quality / Type</label>
+                        <input type="text" id="${serviceId}_quality" placeholder="e.g., Standard, Premium, Luxury">
+                    </div>
+                    <div class="service-detail-group">
+                        <label>Price (₹)</label>
+                        <input type="number" id="${serviceId}_price" placeholder="Enter price (0 if included)">
+                    </div>
+                    <div class="service-detail-group">
+                        <label>Description</label>
+                        <textarea id="${serviceId}_description" placeholder="Additional details about this service..." rows="2"></textarea>
+                    </div>
+                    <div class="service-detail-group">
+                        <label>Specifications</label>
+                        <div class="specifications-container" id="${serviceId}_specs">
+                            <div class="specification-item">
+                                <input type="text" placeholder="Add specification...">
+                                <button type="button" class="btn btn-success btn-mini" onclick="addSpecification('${serviceId}_specs')">+</button>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="service-media-section">
+                        <label class="service-media-label">📸 Upload Images/Videos for this service</label>
+                        <div class="media-upload-btn" onclick="document.getElementById('${serviceId}_media').click()">
+                            📁 Upload Media
+                        </div>
+                        <input type="file" id="${serviceId}_media" multiple accept="image/*,video/*" style="display: none;" onchange="handleServiceMediaUpload('${serviceId}', this)">
+                        <div class="media-preview" id="${serviceId}_media_preview"></div>
+                    </div>
+                    <button type="button" class="btn btn-danger btn-small" style="margin-top: 10px;" onclick="removeCustomService('${serviceId}', '${categoryId}', '${packageType}')">🗑️ Remove Custom Service</button>
+                </div>
+            `;
+            
+            servicesContainer.appendChild(serviceItem);
+            
+            // Add to packageServices
+            if (!packageServices[packageType][categoryId]) {
+                packageServices[packageType][categoryId] = [];
+            }
+            
+            packageServices[packageType][categoryId].push({
+                id: customId,
+                name: serviceName,
+                serviceId: serviceId,
+                custom: true
+            });
+            
+            updateCategoryCount(categoryId, packageType);
+            hideCustomServiceForm(categoryId);
+            
+            alert(`✅ Custom service "${serviceName}" added successfully!`);
+        }
+
+        function removeCustomService(serviceId, categoryId, packageType) {
+            if (confirm('Are you sure you want to remove this custom service?')) {
+                const serviceItem = document.getElementById(`${serviceId}_item`);
+                serviceItem.remove();
+                
+                // Remove from packageServices
+                if (packageServices[packageType][categoryId]) {
+                    packageServices[packageType][categoryId] = packageServices[packageType][categoryId].filter(
+                        s => s.serviceId !== serviceId
+                    );
+                }
+                
+                updateCategoryCount(categoryId, packageType);
             }
         }
 
-        function addSubService() {
-            subServiceCounter++;
-            const container = document.getElementById('subServicesList');
-            const subServiceDiv = document.createElement('div');
-            subServiceDiv.className = 'sub-service-item';
-            subServiceDiv.innerHTML = `
-                <div class="main-service-header">
-                    <h4>Sub-Service #${subServiceCounter}</h4>
-                    <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.parentElement.remove()">Remove</button>
-                </div>
-                <div class="row">
-                    <div class="form-group">
-                        <label>Sub-Service Name *</label>
-                        <input type="text" placeholder="e.g., Wedding Photography">
-                    </div>
-                    <div class="form-group">
-                        <label>Price (₹) *</label>
-                        <input type="number" placeholder="15,000">
-                    </div>
-                    <div class="form-group">
-                        <label>Duration (hours) *</label>
-                        <input type="number" placeholder="6">
-                    </div>
-                </div>
-                <div class="form-group">
-                    <label>Description</label>
-                    <textarea placeholder="Describe this sub-service..." rows="2"></textarea>
-                </div>
-                <div class="form-group">
-                    <label>
-                        <input type="checkbox"> Included in Base Package
-                    </label>
-                    <label style="margin-left: 20px;">
-                        <input type="checkbox"> Popular Choice
-                    </label>
-                </div>
-                <div class="form-group">
-                    <label>Specifications</label>
-                    <div class="specification-list">
-                        <div class="specification-item">
-                            <input type="text" placeholder="e.g., Professional DSLR Camera">
-                            <button type="button" class="btn btn-success btn-small" onclick="addSpecification(this.parentElement.parentElement)">+</button>
-                        </div>
-                    </div>
-                </div>
-            `;
-            container.appendChild(subServiceDiv);
-        }
-
-        function addSpecification(container) {
+        function addSpecification(containerId) {
+            const container = document.getElementById(containerId);
             const specItem = document.createElement('div');
             specItem.className = 'specification-item';
             specItem.innerHTML = `
-                <input type="text" placeholder="Add another specification">
-                <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.remove()">-</button>
+                <input type="text" placeholder="Add specification...">
+                <button type="button" class="btn btn-danger btn-mini" onclick="this.parentElement.remove()">-</button>
             `;
             container.appendChild(specItem);
         }
 
-        function handleMediaUpload(input, type) {
+        function handleServiceMediaUpload(serviceId, input) {
             const files = input.files;
-            const previewContainer = document.getElementById(`${type}MediaPreview`);
+            const previewContainer = document.getElementById(`${serviceId}_media_preview`);
             
             for (let file of files) {
                 if (file.type.startsWith('image/')) {
@@ -919,13 +1341,299 @@
                         previewContainer.appendChild(mediaItem);
                     };
                     reader.readAsDataURL(file);
+                } else if (file.type.startsWith('video/')) {
+                    const mediaItem = document.createElement('div');
+                    mediaItem.className = 'media-item';
+                    mediaItem.innerHTML = `
+                        <div style="background: #2d3748; color: white; height: 80px; display: flex; align-items: center; justify-content: center; font-size: 11px;">
+                            🎥 Video<br>${file.name.substring(0, 15)}...
+                        </div>
+                        <button class="remove-media" onclick="this.parentElement.remove()">×</button>
+                    `;
+                    previewContainer.appendChild(mediaItem);
                 }
             }
         }
 
+        function switchPackageTab(packageType) {
+            document.querySelectorAll('.package-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.closest('.package-tab').classList.add('active');
+            
+            document.querySelectorAll('.package-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${packageType}Package`).classList.add('active');
+        }
+
+        function addSubService() {
+            subServiceCounter++;
+            const container = document.getElementById('subServicesList');
+            const subServiceDiv = document.createElement('div');
+            subServiceDiv.className = 'service-item';
+            subServiceDiv.style.marginBottom = '20px';
+            subServiceDiv.innerHTML = `
+                <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
+                    <h4 style="margin: 0;">Sub-Service #${subServiceCounter}</h4>
+                    <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.parentElement.remove()">Remove</button>
+                </div>
+                <div class="row">
+                    <div class="service-detail-group">
+                        <label>Sub-Service Name *</label>
+                        <input type="text" placeholder="e.g., Wedding Photography">
+                    </div>
+                    <div class="service-detail-group">
+                        <label>Price (₹) *</label>
+                        <input type="number" placeholder="15,000">
+                    </div>
+                    <div class="service-detail-group">
+                        <label>Duration (hours) *</label>
+                        <input type="number" placeholder="6">
+                    </div>
+                </div>
+                <div class="service-detail-group">
+                    <label>Description</label>
+                    <textarea placeholder="Describe this sub-service..." rows="2"></textarea>
+                </div>
+                <div class="form-group">
+                    <label>
+                        <input type="checkbox"> Included in Base Package
+                    </label>
+                    <label style="margin-left: 20px;">
+                        <input type="checkbox"> Popular Choice
+                    </label>
+                </div>
+                <div class="service-detail-group">
+                    <label>Specifications</label>
+                    <div class="specifications-container" id="subservice_${subServiceCounter}_specs">
+                        <div class="specification-item">
+                            <input type="text" placeholder="e.g., Professional DSLR Camera">
+                            <button type="button" class="btn btn-success btn-mini" onclick="addSpecification('subservice_${subServiceCounter}_specs')">+</button>
+                        </div>
+                    </div>
+                </div>
+            `;
+            container.appendChild(subServiceDiv);
+        }
+
+        function collectVenueFormData() {
+            const formData = {
+                vendorType: 'venue',
+                basicInfo: {
+                    venueName: document.getElementById('venueName').value,
+                    email: document.getElementById('venueEmail').value,
+                    description: document.getElementById('venueDescription').value
+                },
+                packages: {
+                    standard: collectPackageData('standard'),
+                    premium: collectPackageData('premium'),
+                    royal: collectPackageData('royal')
+                },
+                timestamp: new Date().toISOString()
+            };
+            return formData;
+        }
+
+        function collectPackageData(packageType) {
+            const packageData = {
+                name: document.getElementById(`${packageType}_name`).value,
+                price: document.getElementById(`${packageType}_price`).value,
+                capacity: document.getElementById(`${packageType}_capacity`).value,
+                teamSize: document.getElementById(`${packageType}_team`).value,
+                description: document.getElementById(`${packageType}_description`).value,
+                services: []
+            };
+
+            // Collect all selected services with their details
+            Object.keys(packageServices[packageType]).forEach(categoryId => {
+                packageServices[packageType][categoryId].forEach(service => {
+                    const serviceId = service.serviceId;
+                    
+                    const serviceData = {
+                        id: service.id,
+                        name: service.name,
+                        custom: service.custom || false,
+                        quantity: document.getElementById(`${serviceId}_quantity`)?.value || '',
+                        quality: document.getElementById(`${serviceId}_quality`)?.value || '',
+                        price: document.getElementById(`${serviceId}_price`)?.value || 0,
+                        description: document.getElementById(`${serviceId}_description`)?.value || '',
+                        specifications: [],
+                        media: []
+                    };
+
+                    // Collect specifications
+                    const specsContainer = document.getElementById(`${serviceId}_specs`);
+                    if (specsContainer) {
+                        const specInputs = specsContainer.querySelectorAll('input[type="text"]');
+                        specInputs.forEach(input => {
+                            if (input.value.trim()) {
+                                serviceData.specifications.push(input.value.trim());
+                            }
+                        });
+                    }
+
+                    // Collect media files
+                    const mediaPreview = document.getElementById(`${serviceId}_media_preview`);
+                    if (mediaPreview) {
+                        const mediaItems = mediaPreview.querySelectorAll('.media-item');
+                        serviceData.media.push(`${mediaItems.length} file(s) uploaded`);
+                    }
+
+                    packageData.services.push(serviceData);
+                });
+            });
+
+            return packageData;
+        }
+
+        function collectServiceFormData() {
+            const formData = {
+                vendorType: 'service',
+                basicInfo: {
+                                       serviceName: document.getElementById('serviceName').value,
+                    email: document.getElementById('serviceEmail').value,
+                    description: document.getElementById('serviceDescription').value
+                },
+                mainService: {
+                    type: document.getElementById('mainServiceType').value,
+                    basePrice: document.getElementById('serviceBasePrice').value,
+                    guestCapacity: document.getElementById('serviceGuestCapacity').value,
+                    teamSize: document.getElementById('serviceTeamSize').value
+                },
+                subServices: [],
+                timestamp: new Date().toISOString()
+            };
+
+            // Collect sub-services
+            const subServiceItems = document.querySelectorAll('#subServicesList .service-item');
+            subServiceItems.forEach((item, index) => {
+                const inputs = item.querySelectorAll('input[type="text"], input[type="number"], textarea');
+                const checkboxes = item.querySelectorAll('input[type="checkbox"]');
+                
+                const subServiceData = {
+                    name: inputs[0]?.value || '',
+                    price: inputs[1]?.value || 0,
+                    duration: inputs[2]?.value || 0,
+                    description: item.querySelector('textarea')?.value || '',
+                    includedInBase: checkboxes[0]?.checked || false,
+                    popularChoice: checkboxes[1]?.checked || false,
+                    specifications: []
+                };
+
+                // Collect specifications
+                const specsContainer = item.querySelector('.specifications-container');
+                if (specsContainer) {
+                    const specInputs = specsContainer.querySelectorAll('input[type="text"]');
+                    specInputs.forEach(specInput => {
+                        if (specInput.value.trim()) {
+                            subServiceData.specifications.push(specInput.value.trim());
+                        }
+                    });
+                }
+
+                formData.subServices.push(subServiceData);
+            });
+
+            return formData;
+        }
+
+        function validateVenueForm() {
+            const venueName = document.getElementById('venueName').value;
+            const venueEmail = document.getElementById('venueEmail').value;
+            const venueDescription = document.getElementById('venueDescription').value;
+
+            if (!venueName || !venueEmail || !venueDescription) {
+                alert('⚠️ Please fill in all basic information fields!');
+                return false;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(venueEmail)) {
+                alert('⚠️ Please enter a valid email address!');
+                return false;
+            }
+
+            // Validate package details
+            const packages = ['standard', 'premium', 'royal'];
+            for (let pkg of packages) {
+                const name = document.getElementById(`${pkg}_name`).value;
+                const price = document.getElementById(`${pkg}_price`).value;
+                const capacity = document.getElementById(`${pkg}_capacity`).value;
+                const team = document.getElementById(`${pkg}_team`).value;
+
+                if (!name || !price || !capacity || !team) {
+                    alert(`⚠️ Please fill in all details for ${pkg.charAt(0).toUpperCase() + pkg.slice(1)} package!`);
+                    return false;
+                }
+
+                // Check if at least one service is selected for this package
+                let hasServices = false;
+                Object.keys(packageServices[pkg]).forEach(categoryId => {
+                    if (packageServices[pkg][categoryId] && packageServices[pkg][categoryId].length > 0) {
+                        hasServices = true;
+                    }
+                });
+
+                if (!hasServices) {
+                    alert(`⚠️ Please select at least one facility/service for ${pkg.charAt(0).toUpperCase() + pkg.slice(1)} package!`);
+                    return false;
+                }
+            }
+
+            return true;
+        }
+
+        function validateServiceForm() {
+            const serviceName = document.getElementById('serviceName').value;
+            const serviceEmail = document.getElementById('serviceEmail').value;
+            const serviceDescription = document.getElementById('serviceDescription').value;
+            const mainServiceType = document.getElementById('mainServiceType').value;
+            const basePrice = document.getElementById('serviceBasePrice').value;
+            const guestCapacity = document.getElementById('serviceGuestCapacity').value;
+            const teamSize = document.getElementById('serviceTeamSize').value;
+
+            if (!serviceName || !serviceEmail || !serviceDescription) {
+                alert('⚠️ Please fill in all basic information fields!');
+                return false;
+            }
+
+            // Validate email format
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(serviceEmail)) {
+                alert('⚠️ Please enter a valid email address!');
+                return false;
+            }
+
+            if (!mainServiceType) {
+                alert('⚠️ Please select a main service type!');
+                return false;
+            }
+
+            if (!basePrice || !guestCapacity || !teamSize) {
+                alert('⚠️ Please fill in base price, guest capacity, and team size!');
+                return false;
+            }
+
+            return true;
+        }
+
         function saveDraft() {
-            alert('📝 Draft saved successfully! You can continue editing later.');
-            console.log('Saving draft for vendor type:', selectedVendorType);
+            if (!selectedVendorType) {
+                alert('⚠️ Please select a vendor type first!');
+                return;
+            }
+
+            let formData;
+            if (selectedVendorType === 'venue') {
+                formData = collectVenueFormData();
+            } else {
+                formData = collectServiceFormData();
+            }
+
+            // Save to localStorage
+            localStorage.setItem('listingDraft', JSON.stringify(formData));
+            localStorage.setItem('listingDraftType', selectedVendorType);
+            
+            alert('💾 Draft saved successfully! You can continue editing later.');
+            console.log('Draft saved:', formData);
         }
 
         function submitListing() {
@@ -933,37 +1641,274 @@
                 alert('⚠️ Please select a vendor type first!');
                 return;
             }
-            
-            // Collect form data
-            const formData = {
-                vendorType: selectedVendorType,
-                timestamp: new Date().toISOString()
-            };
-            
+
+            let formData;
+            let isValid;
+
             if (selectedVendorType === 'venue') {
-                formData.venueName = document.getElementById('venueName').value;
-                formData.venueEmail = document.getElementById('venueEmail').value;
-                formData.description = document.getElementById('venueDescription').value;
-                formData.selectedServices = selectedServices;
-                // Add package data collection here
+                isValid = validateVenueForm();
+                if (isValid) {
+                    formData = collectVenueFormData();
+                }
             } else {
-                formData.serviceName = document.getElementById('serviceName').value;
-                formData.serviceEmail = document.getElementById('serviceEmail').value;
-                formData.description = document.getElementById('serviceDescription').value;
-                formData.mainService = document.getElementById('mainServiceType').value;
-                formData.basePrice = document.getElementById('serviceBasePrice').value;
-                formData.guestCapacity = document.getElementById('serviceGuestCapacity').value;
-                formData.teamSize = document.getElementById('serviceTeamSize').value;
+                isValid = validateServiceForm();
+                if (isValid) {
+                    formData = collectServiceFormData();
+                }
             }
-            
+
+            if (!isValid) {
+                return;
+            }
+
             console.log('Submitting listing:', formData);
-            alert('🎉 Listing submitted successfully! Your listing is now pending approval.');
+            
+            // Here you would typically send the data to your backend API
+            // Example: 
+            // fetch('/api/listings', {
+            //     method: 'POST',
+            //     headers: { 
+            //         'Content-Type': 'application/json',
+            //         'Authorization': 'Bearer ' + authToken
+            //     },
+            //     body: JSON.stringify(formData)
+            // })
+            // .then(response => response.json())
+            // .then(data => {
+            //     if (data.success) {
+            //         alert('🎉 Listing submitted successfully!');
+            //         localStorage.removeItem('listingDraft');
+            //         localStorage.removeItem('listingDraftType');
+            //         window.location.href = '/listings/' + data.listingId;
+            //     } else {
+            //         alert('❌ Error: ' + data.message);
+            //     }
+            // })
+            // .catch(error => {
+            //     console.error('Error:', error);
+            //     alert('❌ Failed to submit listing. Please try again.');
+            // });
+
+            // For demo purposes, show alert with formatted data
+            alert('🎉 Listing submitted successfully!\n\nYour listing is now pending approval.\n\nCheck console for full data.');
+            
+            // Clear draft after successful submission
+            localStorage.removeItem('listingDraft');
+            localStorage.removeItem('listingDraftType');
         }
 
-        // Initialize with first sub-service for service provider
+        function loadDraft() {
+            const draft = localStorage.getItem('listingDraft');
+            const draftType = localStorage.getItem('listingDraftType');
+            
+            if (draft && draftType) {
+                const loadDraft = confirm('📝 Found a saved draft from a previous session. Would you like to load it?');
+                if (loadDraft) {
+                    const draftData = JSON.parse(draft);
+                    console.log('Loading draft:', draftData);
+                    
+                    // Select vendor type
+                    selectVendorType(draftType);
+                    
+                    if (draftType === 'venue') {
+                        // Load basic info
+                        document.getElementById('venueName').value = draftData.basicInfo.venueName || '';
+                        document.getElementById('venueEmail').value = draftData.basicInfo.email || '';
+                        document.getElementById('venueDescription').value = draftData.basicInfo.description || '';
+                        
+                        // Load package data
+                        ['standard', 'premium', 'royal'].forEach(pkg => {
+                            if (draftData.packages[pkg]) {
+                                document.getElementById(`${pkg}_name`).value = draftData.packages[pkg].name || '';
+                                document.getElementById(`${pkg}_price`).value = draftData.packages[pkg].price || '';
+                                document.getElementById(`${pkg}_capacity`).value = draftData.packages[pkg].capacity || '';
+                                document.getElementById(`${pkg}_team`).value = draftData.packages[pkg].teamSize || '';
+                                document.getElementById(`${pkg}_description`).value = draftData.packages[pkg].description || '';
+                            }
+                        });
+                        
+                        alert('✅ Draft loaded successfully! Please review and continue editing.');
+                    } else {
+                        // Load service provider data
+                        document.getElementById('serviceName').value = draftData.basicInfo.serviceName || '';
+                        document.getElementById('serviceEmail').value = draftData.basicInfo.email || '';
+                        document.getElementById('serviceDescription').value = draftData.basicInfo.description || '';
+                        document.getElementById('mainServiceType').value = draftData.mainService.type || '';
+                        document.getElementById('serviceBasePrice').value = draftData.mainService.basePrice || '';
+                        document.getElementById('serviceGuestCapacity').value = draftData.mainService.guestCapacity || '';
+                        document.getElementById('serviceTeamSize').value = draftData.mainService.teamSize || '';
+                        
+                        alert('✅ Draft loaded successfully! Please review and continue editing.');
+                    }
+                }
+            }
+        }
+
+        // Auto-save functionality
+        let autoSaveTimer;
+        function setupAutoSave() {
+            const formInputs = document.querySelectorAll('input, textarea, select');
+            formInputs.forEach(input => {
+                input.addEventListener('input', function() {
+                    clearTimeout(autoSaveTimer);
+                    autoSaveTimer = setTimeout(() => {
+                        if (selectedVendorType) {
+                            const formData = selectedVendorType === 'venue' 
+                                ? collectVenueFormData() 
+                                : collectServiceFormData();
+                            sessionStorage.setItem('autoSave', JSON.stringify(formData));
+                            console.log('Auto-saved at', new Date().toLocaleTimeString());
+                        }
+                    }, 3000); // Auto-save after 3 seconds of inactivity
+                });
+            });
+        }
+
+        // Initialize on page load
         window.addEventListener('DOMContentLoaded', function() {
-            // You can add initialization code here
+            console.log('🚀 Listing Form Initialized');
+            console.log('Current User:', 'nicksri-1248');
+            console.log('Current Date:', '2025-10-19 13:41:14 UTC');
+            
+            setupAutoSave();
+            loadDraft();
+            
+            // Add keyboard shortcuts
+            document.addEventListener('keydown', function(e) {
+                // Ctrl+S or Cmd+S to save draft
+                if ((e.ctrlKey || e.metaKey) && e.key === 's') {
+                    e.preventDefault();
+                    saveDraft();
+                }
+            });
         });
+
+        // Warn user before leaving if there are unsaved changes
+        window.addEventListener('beforeunload', function(e) {
+            const autoSave = sessionStorage.getItem('autoSave');
+            if (autoSave && selectedVendorType) {
+                e.preventDefault();
+                e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
+                return e.returnValue;
+            }
+        });
+
+        // Utility function to generate summary report
+        function generateSummaryReport() {
+            if (!selectedVendorType) {
+                alert('⚠️ Please fill in the form first!');
+                return;
+            }
+
+            const formData = selectedVendorType === 'venue' 
+                ? collectVenueFormData() 
+                : collectServiceFormData();
+
+            let report = '📊 LISTING SUMMARY REPORT\n';
+            report += '='.repeat(50) + '\n\n';
+            report += `Vendor Type: ${selectedVendorType.toUpperCase()}\n`;
+            report += `Created By: nicksri-1248\n`;
+            report += `Date: 2025-10-19 13:41:14 UTC\n\n`;
+
+            if (selectedVendorType === 'venue') {
+                report += `Venue Name: ${formData.basicInfo.venueName}\n`;
+                report += `Email: ${formData.basicInfo.email}\n\n`;
+
+                ['standard', 'premium', 'royal'].forEach(pkg => {
+                    const pkgData = formData.packages[pkg];
+                    report += `\n${pkg.toUpperCase()} PACKAGE:\n`;
+                    report += `-`.repeat(30) + '\n';
+                    report += `Price: ₹${pkgData.price}\n`;
+                    report += `Capacity: ${pkgData.capacity}\n`;
+                    report += `Team Size: ${pkgData.teamSize}\n`;
+                    report += `Services Count: ${pkgData.services.length}\n`;
+                });
+            } else {
+                report += `Service Name: ${formData.basicInfo.serviceName}\n`;
+                report += `Email: ${formData.basicInfo.email}\n`;
+                report += `Main Service: ${formData.mainService.type}\n`;
+                report += `Base Price: ₹${formData.mainService.basePrice}\n`;
+                report += `Sub-Services: ${formData.subServices.length}\n`;
+            }
+
+            console.log(report);
+            alert('📊 Summary report generated! Check the browser console for details.');
+        }
+
+        // Export data as JSON
+        function exportAsJSON() {
+            if (!selectedVendorType) {
+                alert('⚠️ Please fill in the form first!');
+                return;
+            }
+
+            const formData = selectedVendorType === 'venue' 
+                ? collectVenueFormData() 
+                : collectServiceFormData();
+
+            const dataStr = JSON.stringify(formData, null, 2);
+            const dataBlob = new Blob([dataStr], {type: 'application/json'});
+            
+            const url = URL.createObjectURL(dataBlob);
+            const link = document.createElement('a');
+            link.href = url;
+            link.download = `listing_${selectedVendorType}_${Date.now()}.json`;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(url);
+            
+            alert('📥 Listing data exported as JSON file!');
+        }
+
+        // Add keyboard shortcut info
+        console.log('%c⌨️ KEYBOARD SHORTCUTS', 'color: #4299e1; font-weight: bold; font-size: 14px;');
+        console.log('Ctrl/Cmd + S: Save Draft');
+        console.log('ESC: Close any open modal/form');
+
+        // Add ESC key handler
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                // Close all custom service forms
+                document.querySelectorAll('.custom-service-form.active').forEach(form => {
+                    form.classList.remove('active');
+                });
+            }
+        });
+
+        // Performance tracking
+        const performanceData = {
+            loadTime: 0,
+            interactions: 0
+        };
+
+        window.addEventListener('load', function() {
+            performanceData.loadTime = performance.now();
+            console.log(`⚡ Page loaded in ${performanceData.loadTime.toFixed(2)}ms`);
+        });
+
+        // Track interactions
+        document.addEventListener('click', function() {
+            performanceData.interactions++;
+        });
+
+        // Debug helper
+        window.debugListingForm = function() {
+            console.log('🔍 DEBUG INFO:');
+            console.log('Selected Vendor Type:', selectedVendorType);
+            console.log('Package Services:', packageServices);
+            console.log('Custom Service Counter:', customServiceCounter);
+            console.log('Sub Service Counter:', subServiceCounter);
+            console.log('Performance:', performanceData);
+            if (selectedVendorType) {
+                const formData = selectedVendorType === 'venue' 
+                    ? collectVenueFormData() 
+                    : collectServiceFormData();
+                console.log('Current Form Data:', formData);
+            }
+        };
+
+        console.log('%c💡 TIP: Type debugListingForm() in console to see current form state', 'color: #48bb78; font-style: italic;');
     </script>
 </body>
 </html>
