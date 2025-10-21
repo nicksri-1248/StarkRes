@@ -213,12 +213,6 @@
             border-left: 4px solid #3182ce;
         }
 
-        .alert-success {
-            background: #c6f6d5;
-            color: #22543d;
-            border-left: 4px solid #38a169;
-        }
-
         .badge {
             display: inline-block;
             padding: 4px 12px;
@@ -300,27 +294,8 @@
         }
 
         .category-content.active {
-            max-height: 5000px;
+            max-height: 10000px;
             padding: 20px;
-        }
-
-        .services-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 12px;
-        }
-
-        .service-item {
-            background: #f7fafc;
-            border: 2px solid #e2e8f0;
-            border-radius: 6px;
-            padding: 12px;
-            transition: all 0.3s ease;
-        }
-
-        .service-item.selected {
-            border-color: black;
-            background: #f0f4ff;
         }
 
         .service-checkbox-wrapper {
@@ -356,7 +331,8 @@
         }
 
         .service-detail-group input,
-        .service-detail-group textarea {
+        .service-detail-group textarea,
+        .service-detail-group select {
             width: 100%;
             padding: 8px 12px;
             border: 1px solid #cbd5e0;
@@ -453,42 +429,6 @@
             border-top: 2px solid #e9ecef;
         }
 
-        .add-custom-service {
-            margin-top: 15px;
-            padding: 15px;
-            background: #fff5e6;
-            border: 2px dashed #f59e0b;
-            border-radius: 6px;
-            text-align: center;
-        }
-
-        .custom-service-form {
-            margin-top: 15px;
-            padding: 15px;
-            background: white;
-            border: 2px solid #f59e0b;
-            border-radius: 6px;
-            display: none;
-        }
-
-        .custom-service-form.active {
-            display: block;
-        }
-
-        .package-services-container {
-            margin-top: 20px;
-        }
-
-        .selected-services-count {
-            display: inline-block;
-            background: #48bb78;
-            color: white;
-            padding: 2px 8px;
-            border-radius: 10px;
-            font-size: 11px;
-            margin-left: 8px;
-        }
-
         .sub-service-card {
             background: white;
             border: 2px solid #e2e8f0;
@@ -559,6 +499,40 @@
             font-weight: 600;
             color: black;
         }
+
+        .service-item-expanded {
+            background: #f7fafc;
+            border: 2px solid #e2e8f0;
+            border-radius: 6px;
+            padding: 15px;
+            margin-bottom: 15px;
+        }
+
+        .service-item-expanded.selected {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .selected-services-count {
+            display: inline-block;
+            background: #48bb78;
+            color: white;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            margin-left: 8px;
+        }
+
+        .service-details-form {
+            margin-top: 15px;
+            padding-top: 15px;
+            border-top: 2px solid #e2e8f0;
+            display: none;
+        }
+
+        .service-details-form.active {
+            display: block;
+        }
     </style>
 </head>
 <body>
@@ -585,7 +559,7 @@
         <!-- Venue Provider Form -->
         <div id="venueProviderForm" class="form-container">
             <div class="alert alert-info">
-                <strong>Venue Provider:</strong> Fill in basic information, configure venue packages (facilities only), and service packages (with pricing & sub-services).
+                <strong>Venue Provider:</strong> Fill in basic information, configure venue packages (facilities only), and add services with detailed sub-services for Standard, Premium, and Royal packages.
             </div>
 
             <!-- Basic Information -->
@@ -678,102 +652,22 @@
 
             <!-- DIVIDER -->
             <div class="divider-section">
-                <h2>⬇️ SERVICE PACKAGES SECTION ⬇️</h2>
-                <p style="margin: 5px 0 0 0; opacity: 0.9;">Configure service offerings with pricing, team size, and sub-services</p>
+                <h2>⬇️ SERVICES SECTION ⬇️</h2>
+                <p style="margin: 5px 0 0 0; opacity: 0.9;">Add and configure services like Entertainment, Decoration, Catering, etc. with package-wise details</p>
             </div>
 
-            <!-- SERVICE PACKAGES SECTION -->
-            <div class="form-section" style="border-left-color: #764ba2;">
-                <h2>🎨 SERVICE PACKAGES (With Pricing & Details)</h2>
-                <p style="color: #718096; margin-bottom: 20px;">Define service packages with base price, capacity, team size, and sub-services.</p>
+            <!-- SERVICES SECTION (NEW) -->
+            <div class="form-section" style="border-left-color: #f59e0b;">
+                <h2>🎪 SERVICES (Entertainment, Decoration, Catering, etc.)</h2>
+                <p style="color: #718096; margin-bottom: 20px;">Select services and configure sub-services for Standard, Premium, and Royal packages with specifications.</p>
                 
-                <div class="package-tabs">
-                    <button class="package-tab active" onclick="switchServicePackageTab('standard')">
-                        🌿 Standard <span class="badge badge-standard">BUDGET</span>
-                    </button>
-                    <button class="package-tab" onclick="switchServicePackageTab('premium')">
-                        💎 Premium <span class="badge badge-premium">COMFORT</span>
-                    </button>
-                    <button class="package-tab" onclick="switchServicePackageTab('royal')">
-                        👑 Royal <span class="badge badge-royal">LUXURY</span>
-                    </button>
-                </div>
-
-                <!-- Standard Service Package -->
-                <div id="serviceStandardPackage" class="package-content active">
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Base Price *</label>
-                            <input type="number" id="service_standard_price" placeholder="₹ 50,000">
-                        </div>
-                        <div class="form-group">
-                            <label>Guest Capacity *</label>
-                            <input type="number" id="service_standard_capacity" placeholder="e.g., 100">
-                        </div>
-                        <div class="form-group">
-                            <label>Team Size *</label>
-                            <input type="number" id="service_standard_team" placeholder="e.g., 3">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <h4 style="margin-bottom: 10px;">🎁 Sub-Services</h4>
-                        <p style="color: #718096; margin-bottom: 15px; font-size: 14px;">Add sub-services with pricing and specifications</p>
-                        <div id="service_standard_subServicesList"></div>
-                        <button type="button" class="btn btn-success btn-small" onclick="addSubServiceToPackage('standard')">+ Add Sub-Service</button>
-                    </div>
-                </div>
-
-                <!-- Premium Service Package -->
-                <div id="servicePremiumPackage" class="package-content">
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Base Price *</label>
-                            <input type="number" id="service_premium_price" placeholder="₹ 100,000">
-                        </div>
-                        <div class="form-group">
-                            <label>Guest Capacity *</label>
-                            <input type="number" id="service_premium_capacity" placeholder="e.g., 300">
-                        </div>
-                        <div class="form-group">
-                            <label>Team Size *</label>
-                            <input type="number" id="service_premium_team" placeholder="e.g., 6">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <h4 style="margin-bottom: 10px;">🎁 Sub-Services</h4>
-                        <p style="color: #718096; margin-bottom: 15px; font-size: 14px;">Add sub-services with pricing and specifications</p>
-                        <div id="service_premium_subServicesList"></div>
-                        <button type="button" class="btn btn-success btn-small" onclick="addSubServiceToPackage('premium')">+ Add Sub-Service</button>
-                    </div>
-                </div>
-
-                <!-- Royal Service Package -->
-                <div id="serviceRoyalPackage" class="package-content">
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Base Price *</label>
-                            <input type="number" id="service_royal_price" placeholder="₹ 200,000">
-                        </div>
-                        <div class="form-group">
-                            <label>Guest Capacity *</label>
-                            <input type="number" id="service_royal_capacity" placeholder="e.g., 700">
-                        </div>
-                        <div class="form-group">
-                            <label>Team Size *</label>
-                            <input type="number" id="service_royal_team" placeholder="e.g., 12">
-                        </div>
-                    </div>
-
-                    <div class="form-group">
-                        <h4 style="margin-bottom: 10px;">🎁 Sub-Services</h4>
-                        <p style="color: #718096; margin-bottom: 15px; font-size: 14px;">Add sub-services with pricing and specifications</p>
-                        <div id="service_royal_subServicesList"></div>
-                        <button type="button" class="btn btn-success btn-small" onclick="addSubServiceToPackage('royal')">+ Add Sub-Service</button>
-                    </div>
-                </div>
+                <div id="servicesMainContainer"></div>
+                
+                <button type="button" class="btn btn-success" onclick="addNewServiceCategory()" style="margin-top: 20px;">
+                    ➕ Add Service Category
+                </button>
             </div>
+
         </div>
 
         <!-- Service Provider Form (Kept As Is) -->
@@ -854,6 +748,7 @@
         let selectedVendorType = null;
         let customServiceCounter = 0;
         let subServiceCounter = 0;
+        let mainServiceCounter = 0;
         
         let venuePackageFacilities = {
             standard: new Set(),
@@ -861,10 +756,255 @@
             royal: new Set()
         };
 
-        let servicePackageSubServices = {
-            standard: 0,
-            premium: 0,
-            royal: 0
+        let venueServices = []; // Store all added service categories
+
+        // Service Categories with Sub-Services and Specifications
+        const serviceCategories = {
+            "Entertainments": {
+                icon: "🎭",
+                subServices: [
+                    {
+                        name: "DJ System",
+                        specifications: ["2–6 Speaker DJ System", "Mixer", "Lights", "Fog", "LED Screen", "Dance Floor"]
+                    },
+                    {
+                        name: "Truck DJ",
+                        specifications: ["Truck DJ with Decor", "Generator 2–5 kVA", "Safety Barriers"]
+                    },
+                    {
+                        name: "Live Band & Dhol",
+                        specifications: ["Live Band 4–10 members", "Dhol", "Vocalist", "Sound Operator"]
+                    },
+                    {
+                        name: "Dancer & Performers",
+                        specifications: ["Dancers (Folk/Western/LED/Fire)", "2–12 artists", "Costume", "Music Sync"]
+                    },
+                    {
+                        name: "Magician",
+                        specifications: ["Magician (Stage/Kids/Close-Up)", "Illusion Props"]
+                    },
+                    {
+                        name: "MC / Anchor / Host",
+                        specifications: ["Host/Anchor with mic", "30–60 min act"]
+                    },
+                    {
+                        name: "Comedian / Celebrity Appearance",
+                        specifications: ["Professional Comedian", "Celebrity Booking", "Stage Setup"]
+                    },
+                    {
+                        name: "Games & VR Entertainment",
+                        specifications: ["VR Zone 4–8 stations", "Sanitisation between users", "Gaming Consoles"]
+                    },
+                    {
+                        name: "Photo Booth (360° / GIF Booth)",
+                        specifications: ["360° / GIF Booth", "Unlimited Prints", "Branding Overlay"]
+                    }
+                ]
+            },
+            "Decoration": {
+                icon: "🌺",
+                subServices: [
+                    {
+                        name: "Theme Decoration (Royal, Floral, Rustic, Custom)",
+                        specifications: ["Floral & Fabric Drapes", "Chandeliers", "Arches", "Entry Gates"]
+                    },
+                    {
+                        name: "Venue Decoration (Gate, Mandap, Tables, Lighting)",
+                        specifications: ["Mandap Setup", "Table Centerpieces", "Chair Covers", "Stage Backdrop"]
+                    },
+                    {
+                        name: "Balloon & Light Decoration",
+                        specifications: ["LED & Fairy Light Setup", "Neon Signs", "Ceiling Lighting", "Balloon Arches"]
+                    },
+                    {
+                        name: "Branding & Signage",
+                        specifications: ["Branding Wall", "Backdrops (Vinyl/LED)", "Step & Repeat", "Directional Signs"]
+                    },
+                    {
+                        name: "Floral Installations",
+                        specifications: ["Flower Walls", "Hanging Florals", "Floating Decor", "Fresh Flowers"]
+                    },
+                    {
+                        name: "Lighting Ambience",
+                        specifications: ["Architectural Lighting", "Gobo Projection", "Color Changing Lights", "Spotlights"]
+                    }
+                ]
+            },
+            "Accommodation": {
+                icon: "🏨",
+                subServices: [
+                    {
+                        name: "Guest Rooms (Standard / Deluxe / Suite)",
+                        specifications: ["AC/Non-AC Rooms", "Deluxe Suites", "Personal Butler", "Room Service"]
+                    },
+                    {
+                        name: "Hospitality Desk",
+                        specifications: ["Welcome Desk", "Guest Kit", "Shuttle Service", "24/7 Support"]
+                    },
+                    {
+                        name: "Bridal / VIP Suite",
+                        specifications: ["VIP/Bridal Room with Vanity", "Decor", "Privacy", "Premium Amenities"]
+                    },
+                    {
+                        name: "Guest Lounge / Waiting Area",
+                        specifications: ["Lounge Area: Sofas", "Tea/Coffee Station", "Wi-Fi", "Charging Ports"]
+                    },
+                    {
+                        name: "Transport & Transfers",
+                        specifications: ["Pick-up & Drop Facility", "Car/Shuttle/VIP Sedan", "Airport Transfers"]
+                    }
+                ]
+            },
+            "Catering": {
+                icon: "🍴",
+                subServices: [
+                    {
+                        name: "Food Type (Veg / Non-Veg / Jain / Vegan)",
+                        specifications: ["Veg/Non-Veg/Jain/Vegan Menu options", "Serving Type: Buffet/Live Counter/Plated"]
+                    },
+                    {
+                        name: "Cuisine Options (Indian / Continental / Chinese / etc.)",
+                        specifications: ["Cuisine: Indian", "South Indian", "Chinese", "Continental", "Italian", "Mexican"]
+                    },
+                    {
+                        name: "Setup & Counter Design",
+                        specifications: ["LED Counters", "Themed Booths", "Ceramic or Disposable Utensils"]
+                    },
+                    {
+                        name: "Beverage Bar (Mocktail / Cocktail / Coffee)",
+                        specifications: ["Mocktails", "Cocktails", "Coffee Bar with Bartenders", "Juice Station"]
+                    },
+                    {
+                        name: "Dessert & Sweets Corner",
+                        specifications: ["Chocolate Fountain", "Ice Cream", "Regional Sweets", "Cake Display"]
+                    },
+                    {
+                        name: "Dietary & Special Menus",
+                        specifications: ["Gluten-Free", "Sugar-Free", "Halal", "Kosher", "Allergy-Friendly"]
+                    }
+                ]
+            },
+            "Staff & Waiters": {
+                icon: "👨‍🍳",
+                subServices: [
+                    {
+                        name: "Service Staff",
+                        specifications: ["Waiters", "Supervisors", "Cleaners", "Uniformed & Trained", "8–10 hours shift"]
+                    },
+                    {
+                        name: "Special Staff (Butlers / Bartenders / Counter Managers)",
+                        specifications: ["Butlers", "Bartenders", "Counter Managers", "Professional Training"]
+                    },
+                    {
+                        name: "Guest Relations & Check-in Team",
+                        specifications: ["Guest Relations Staff for VIPs", "Multi-lingual Support", "Registration Desk"]
+                    },
+                    {
+                        name: "Housekeeping & Maintenance",
+                        specifications: ["Housekeeping for Cleanliness", "Waste Disposal", "Equipment Maintenance"]
+                    }
+                ]
+            },
+            "Stages": {
+                icon: "🎤",
+                subServices: [
+                    {
+                        name: "Stage Type (Simple / Rotatable / LED / Truss)",
+                        specifications: ["Carpeted/Rotatable/LED/Truss Stage", "1–3 ft height", "Load Capacity"]
+                    },
+                    {
+                        name: "Stage Accessories (Backdrop / Steps / Lights)",
+                        specifications: ["Backdrop", "Side Panels", "Steps", "Railings", "Decorative Elements"]
+                    },
+                    {
+                        name: "Audio-Visual Production",
+                        specifications: ["Sound Engineer", "Lighting Operator", "Video Screen Setup", "Mixing Console"]
+                    },
+                    {
+                        name: "Special Effects (Fog / Confetti / Pyro)",
+                        specifications: ["Confetti Cannons", "Fog", "Fire-safe Pyro", "CO2 Jets", "Sparklers"]
+                    }
+                ]
+            },
+            "Sheeting": {
+                icon: "⛺",
+                subServices: [
+                    {
+                        name: "Tent Type (Waterproof / German / Canopy / Dome)",
+                        specifications: ["Waterproof Tent", "German Frame Tent", "Canopy", "Dome Structure"]
+                    },
+                    {
+                        name: "Add-ons (Fans / AC / Lighting / Flooring)",
+                        specifications: ["Lighting Inside Tent", "Flooring", "Carpet", "AC or Fans"]
+                    },
+                    {
+                        name: "Floor & Seating",
+                        specifications: ["VIP Sofa Setup", "Guest Chairs", "Raised Platform", "Carpet Runners"]
+                    },
+                    {
+                        name: "Climate Control",
+                        specifications: ["Misting Fans", "Heaters", "Air Coolers", "Temperature Monitoring"]
+                    }
+                ]
+            },
+            "Photo & Videographers": {
+                icon: "📸",
+                subServices: [
+                    {
+                        name: "Photography (Traditional / Candid / Drone / Booth)",
+                        specifications: ["DSLR/Mirrorless/Drone", "4K – 6K Resolution", "Multiple Photographers"]
+                    },
+                    {
+                        name: "Videography (Event / Highlight / Live Stream)",
+                        specifications: ["Traditional & Candid Coverage", "Cinematic Highlights", "Full Event Recording"]
+                    },
+                    {
+                        name: "Equipment & Camera Setup",
+                        specifications: ["Professional Cameras", "Lighting Equipment", "Stabilizers", "Backup Gear"]
+                    },
+                    {
+                        name: "Live Streaming & Projection",
+                        specifications: ["Live Streaming: 1080p Feed", "2 Cameras", "YouTube/LED Screens"]
+                    },
+                    {
+                        name: "Post-Production",
+                        specifications: ["Post-Editing: 3-4 min Highlight", "Drone Mapping", "BTS Video", "Color Grading"]
+                    },
+                    {
+                        name: "Instant Printing Booth",
+                        specifications: ["Instant Prints: 500 prints/hr", "Guest Wall Album", "Digital Copy"]
+                    }
+                ]
+            },
+            "Security": {
+                icon: "🛡",
+                subServices: [
+                    {
+                        name: "Security Team (Bouncers / Guards / Entry Staff)",
+                        specifications: ["2–10 Bouncers", "Entry Guards", "Supervisor per 100 guests"]
+                    },
+                    {
+                        name: "Equipment (CCTV / Metal Detector / Walkie-Talkie)",
+                        specifications: ["Metal Detector", "CCTV", "Walkie-Talkie", "Fire Safety"]
+                    },
+                    {
+                        name: "VIP & Asset Protection",
+                        specifications: ["VIP Escort", "Stage & Asset Guarding", "Night Patrol"]
+                    },
+                    {
+                        name: "Crowd Flow & Traffic Management",
+                        specifications: ["Traffic Management", "Valet Parking", "Shuttle Zones", "Queue Management"]
+                    },
+                    {
+                        name: "Emergency & Medical Support",
+                        specifications: ["First-Aid Tent", "On-call Ambulance", "Nurse on-site", "Emergency Exits"]
+                    },
+                    {
+                        name: "Access Control (RFID / Wristbands)",
+                        specifications: ["RFID Access Cards", "Wristbands for Guest Check-in", "Digital Passes"]
+                    }
+                ]
+            }
         };
 
         const facilitiesData = {
@@ -1126,11 +1266,6 @@
                     </div>
                     <div class="category-content" id="${categoryId}">
                         <div class="simple-checkbox-list" id="${categoryId}_list"></div>
-                        <div class="add-custom-service">
-                            <button type="button" class="btn btn-success btn-small" onclick="addCustomVenueFacility('${packageType}', '${categoryId}')">
-                                ➕ Add Custom Facility (Not in List)
-                            </button>
-                        </div>
                     </div>
                 `;
                 
@@ -1185,35 +1320,6 @@
             countElement.textContent = `${selectedCount} selected`;
         }
 
-        function addCustomVenueFacility(packageType, categoryId) {
-            const facilityName = prompt('Enter custom facility name:');
-            if (!facilityName || !facilityName.trim()) {
-                return;
-            }
-            
-            customServiceCounter++;
-            const customId = `custom_venue_${customServiceCounter}`;
-            const checkboxId = `venue_${packageType}_${customId}`;
-            
-            const listContainer = document.getElementById(`${categoryId}_list`);
-            const checkboxItem = document.createElement('div');
-            checkboxItem.className = 'simple-checkbox-item';
-            checkboxItem.innerHTML = `
-                <input type="checkbox" 
-                       id="${checkboxId}" 
-                       value="${customId}"
-                       checked
-                       onchange="toggleVenueFacility('${packageType}', '${customId}', '${categoryId}')">
-                <label for="${checkboxId}">${facilityName} <span style="color: #f59e0b; font-size: 11px;">(Custom)</span></label>
-            `;
-            listContainer.appendChild(checkboxItem);
-            
-            venuePackageFacilities[packageType].add(customId);
-            updateVenueCategoryCount(categoryId, packageType);
-            
-            alert(`✅ Custom facility "${facilityName}" added!`);
-        }
-
         function switchVenuePackageTab(packageType) {
             const parentSection = event.target.closest('.form-section');
             parentSection.querySelectorAll('.package-tab').forEach(tab => tab.classList.remove('active'));
@@ -1223,64 +1329,170 @@
             document.getElementById(`venue${packageType.charAt(0).toUpperCase() + packageType.slice(1)}Package`).classList.add('active');
         }
 
-        function switchServicePackageTab(packageType) {
-            const parentSection = event.target.closest('.form-section');
-            parentSection.querySelectorAll('.package-tab').forEach(tab => tab.classList.remove('active'));
-            event.target.closest('.package-tab').classList.add('active');
+        // NEW SERVICES SECTION FUNCTIONS
+        function addNewServiceCategory() {
+            mainServiceCounter++;
+            const serviceId = `service_${mainServiceCounter}`;
+            const container = document.getElementById('servicesMainContainer');
             
-            parentSection.querySelectorAll('.package-content').forEach(content => content.classList.remove('active'));
-            document.getElementById(`service${packageType.charAt(0).toUpperCase() + packageType.slice(1)}Package`).classList.add('active');
-        }
-
-        function addSubServiceToPackage(packageType) {
-            servicePackageSubServices[packageType]++;
-            const counter = servicePackageSubServices[packageType];
-            const container = document.getElementById(`service_${packageType}_subServicesList`);
-            
-            const subServiceCard = document.createElement('div');
-            subServiceCard.className = 'sub-service-card';
-            subServiceCard.innerHTML = `
+            const serviceCard = document.createElement('div');
+            serviceCard.className = 'sub-service-card';
+            serviceCard.style.background = '#f0f9ff';
+            serviceCard.innerHTML = `
                 <div class="sub-service-header">
-                    <h4 style="margin: 0;">Sub-Service #${counter}</h4>
+                    <h3 style="margin: 0; color: #1e40af;">Service Category #${mainServiceCounter}</h3>
                     <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.parentElement.remove()">Remove</button>
                 </div>
-                <div class="row">
-                    <div class="service-detail-group">
-                        <label>Sub-Service Name *</label>
-                        <input type="text" placeholder="e.g., Wedding Photography">
-                    </div>
-                    <div class="service-detail-group">
-                        <label>Price (₹) *</label>
-                        <input type="number" placeholder="15,000">
-                    </div>
-                    <div class="service-detail-group">
-                        <label>Duration (hours) *</label>
-                        <input type="number" placeholder="6">
-                    </div>
+                
+                <div class="form-group">
+                    <label>Select Service Category *</label>
+                    <select id="${serviceId}_category" onchange="loadSubServicesForCategory('${serviceId}')" style="padding: 10px; font-size: 14px;">
+                        <option value="">-- Select Service Category --</option>
+                        ${Object.keys(serviceCategories).map(cat => 
+                            `<option value="${cat}">${serviceCategories[cat].icon} ${cat}</option>`
+                        ).join('')}
+                    </select>
                 </div>
-                <div class="service-detail-group">
-                    <label>Description</label>
-                    <textarea placeholder="Describe this sub-service..." rows="2"></textarea>
-                </div>
-                <div style="margin: 15px 0;">
-                    <label style="display: inline-block; margin-right: 20px;">
-                        <input type="checkbox"> Included in Base Package
-                    </label>
-                    <label style="display: inline-block;">
-                        <input type="checkbox"> Popular Choice
-                    </label>
-                </div>
-                <div class="service-detail-group">
-                    <label>Specifications</label>
-                    <div class="specifications-container" id="service_${packageType}_sub_${counter}_specs">
-                        <div class="specification-item">
-                            <input type="text" placeholder="e.g., Professional DSLR Camera">
-                            <button type="button" class="btn btn-success btn-mini" onclick="addSpecification('service_${packageType}_sub_${counter}_specs')">+</button>
-                        </div>
+                
+                <div id="${serviceId}_packages_container" style="display: none; margin-top: 20px;">
+                    <h4 style="margin-bottom: 15px; color: #1e40af;">Configure Packages for this Service</h4>
+                    
+                    <div class="package-tabs">
+                        <button class="package-tab active" onclick="switchServiceTab('${serviceId}', 'standard')">
+                            🌿 Standard <span class="badge badge-standard">BUDGET</span>
+                        </button>
+                        <button class="package-tab" onclick="switchServiceTab('${serviceId}', 'premium')">
+                            💎 Premium <span class="badge badge-premium">COMFORT</span>
+                        </button>
+                        <button class="package-tab" onclick="switchServiceTab('${serviceId}', 'royal')">
+                            👑 Royal <span class="badge badge-royal">LUXURY</span>
+                        </button>
+                    </div>
+                    
+                    <!-- Standard Package -->
+                    <div id="${serviceId}_standard_content" class="package-content active">
+                        <div id="${serviceId}_standard_subservices"></div>
+                    </div>
+                    
+                    <!-- Premium Package -->
+                    <div id="${serviceId}_premium_content" class="package-content">
+                        <div id="${serviceId}_premium_subservices"></div>
+                    </div>
+                    
+                    <!-- Royal Package -->
+                    <div id="${serviceId}_royal_content" class="package-content">
+                        <div id="${serviceId}_royal_subservices"></div>
                     </div>
                 </div>
             `;
-            container.appendChild(subServiceCard);
+            
+            container.appendChild(serviceCard);
+        }
+
+        function loadSubServicesForCategory(serviceId) {
+            const categorySelect = document.getElementById(`${serviceId}_category`);
+            const selectedCategory = categorySelect.value;
+            
+            if (!selectedCategory) {
+                document.getElementById(`${serviceId}_packages_container`).style.display = 'none';
+                return;
+            }
+            
+            document.getElementById(`${serviceId}_packages_container`).style.display = 'block';
+            
+            const categoryData = serviceCategories[selectedCategory];
+            const packages = ['standard', 'premium', 'royal'];
+            
+            packages.forEach(pkg => {
+                const container = document.getElementById(`${serviceId}_${pkg}_subservices`);
+                container.innerHTML = '';
+                
+                categoryData.subServices.forEach((subService, index) => {
+                    const subServiceId = `${serviceId}_${pkg}_sub_${index}`;
+                    
+                    const subServiceDiv = document.createElement('div');
+                    subServiceDiv.className = 'service-item-expanded';
+                    subServiceDiv.innerHTML = `
+                        <div class="service-checkbox-wrapper">
+                            <input type="checkbox" 
+                                   id="${subServiceId}_check" 
+                                   onchange="toggleSubServiceDetails('${subServiceId}')">
+                            <label for="${subServiceId}_check">${subService.name}</label>
+                        </div>
+                        
+                        <div class="service-details-form" id="${subServiceId}_details">
+                            <div class="row">
+                                <div class="service-detail-group">
+                                    <label>Price (₹)</label>
+                                    <input type="number" placeholder="e.g., 25000">
+                                </div>
+                                <div class="service-detail-group">
+                                    <label>Duration (hours)</label>
+                                    <input type="number" placeholder="e.g., 6">
+                                </div>
+                                <div class="service-detail-group">
+                                    <label>Team Size</label>
+                                    <input type="number" placeholder="e.g., 5">
+                                </div>
+                            </div>
+                            
+                            <div class="service-detail-group">
+                                <label>Description</label>
+                                <textarea placeholder="Describe this sub-service..." rows="2"></textarea>
+                            </div>
+                            
+                            <div class="service-detail-group">
+                                <label>Specifications</label>
+                                <div class="specifications-container" id="${subServiceId}_specs">
+                                    ${subService.specifications.map((spec, specIndex) => `
+                                        <div class="specification-item">
+                                            <input type="text" value="${spec}">
+                                            ${specIndex === 0 ? 
+                                                `<button type="button" class="btn btn-success btn-mini" onclick="addSpecification('${subServiceId}_specs')">+</button>` :
+                                                `<button type="button" class="btn btn-danger btn-mini" onclick="this.parentElement.remove()">-</button>`
+                                            }
+                                                        </div>
+                                    `).join('')}
+                                </div>
+                            </div>
+                            
+                            <div style="margin: 15px 0;">
+                                <label style="display: inline-block; margin-right: 20px;">
+                                    <input type="checkbox"> Included in Base Package
+                                </label>
+                                <label style="display: inline-block;">
+                                    <input type="checkbox"> Popular Choice
+                                </label>
+                            </div>
+                        </div>
+                    `;
+                    
+                    container.appendChild(subServiceDiv);
+                });
+            });
+        }
+
+        function toggleSubServiceDetails(subServiceId) {
+            const checkbox = document.getElementById(`${subServiceId}_check`);
+            const detailsForm = document.getElementById(`${subServiceId}_details`);
+            const parentItem = checkbox.closest('.service-item-expanded');
+            
+            if (checkbox.checked) {
+                detailsForm.classList.add('active');
+                parentItem.classList.add('selected');
+            } else {
+                detailsForm.classList.remove('active');
+                parentItem.classList.remove('selected');
+            }
+        }
+
+        function switchServiceTab(serviceId, packageType) {
+            const container = document.getElementById(`${serviceId}_packages_container`);
+            container.querySelectorAll('.package-tab').forEach(tab => tab.classList.remove('active'));
+            event.target.closest('.package-tab').classList.add('active');
+            
+            container.querySelectorAll('.package-content').forEach(content => content.classList.remove('active'));
+            document.getElementById(`${serviceId}_${packageType}_content`).classList.add('active');
         }
 
         function addSpecification(containerId) {
@@ -1294,6 +1506,7 @@
             container.appendChild(specItem);
         }
 
+        // SERVICE PROVIDER FUNCTIONS (KEPT AS IS)
         function addSubService() {
             subServiceCounter++;
             const container = document.getElementById('subServicesList');
@@ -1343,10 +1556,11 @@
             container.appendChild(subServiceCard);
         }
 
+        // DATA COLLECTION FUNCTIONS
         function collectVenueFormData() {
             const formData = {
                 vendorType: 'venue',
-                timestamp: '2025-10-19 15:18:09',
+                timestamp: '2025-10-21 13:04:38',
                 createdBy: 'nicksri-1248',
                 basicInfo: {
                     venueName: document.getElementById('venueName').value,
@@ -1358,11 +1572,7 @@
                     premium: collectVenuePackageData('premium'),
                     royal: collectVenuePackageData('royal')
                 },
-                servicePackages: {
-                    standard: collectServicePackageData('standard'),
-                    premium: collectServicePackageData('premium'),
-                    royal: collectServicePackageData('royal')
-                }
+                services: collectVenueServicesData()
             };
             return formData;
         }
@@ -1375,49 +1585,74 @@
             };
         }
 
-        function collectServicePackageData(packageType) {
-            const packageData = {
-                basePrice: document.getElementById(`service_${packageType}_price`)?.value || '',
-                guestCapacity: document.getElementById(`service_${packageType}_capacity`)?.value || '',
-                teamSize: document.getElementById(`service_${packageType}_team`)?.value || '',
-                subServices: []
-            };
-
-            const subServicesList = document.getElementById(`service_${packageType}_subServicesList`);
-            if (subServicesList) {
-                const subServiceCards = subServicesList.querySelectorAll('.sub-service-card');
-                subServiceCards.forEach(card => {
-                    const inputs = card.querySelectorAll('input[type="text"], input[type="number"], textarea');
-                    const checkboxes = card.querySelectorAll('input[type="checkbox"]');
-                    
-                    const subServiceData = {
-                        name: inputs[0]?.value || '',
-                        price: inputs[1]?.value || 0,
-                        duration: inputs[2]?.value || 0,
-                        description: card.querySelector('textarea')?.value || '',
-                        includedInBase: checkboxes[0]?.checked || false,
-                        popularChoice: checkboxes[1]?.checked || false,
-                        specifications: []
-                    };
-
-                    const specInputs = card.querySelectorAll('.specification-item input[type="text"]');
-                    specInputs.forEach(specInput => {
-                        if (specInput.value.trim()) {
-                            subServiceData.specifications.push(specInput.value.trim());
+        function collectVenueServicesData() {
+            const servicesData = [];
+            const serviceCards = document.querySelectorAll('#servicesMainContainer .sub-service-card');
+            
+            serviceCards.forEach((card, index) => {
+                const serviceId = `service_${index + 1}`;
+                const categorySelect = document.getElementById(`${serviceId}_category`);
+                
+                if (categorySelect && categorySelect.value) {
+                    const serviceData = {
+                        categoryName: categorySelect.value,
+                        packages: {
+                            standard: collectServicePackageSubServices(serviceId, 'standard'),
+                            premium: collectServicePackageSubServices(serviceId, 'premium'),
+                            royal: collectServicePackageSubServices(serviceId, 'royal')
                         }
-                    });
+                    };
+                    servicesData.push(serviceData);
+                }
+            });
+            
+            return servicesData;
+        }
 
-                    packageData.subServices.push(subServiceData);
+        function collectServicePackageSubServices(serviceId, packageType) {
+            const subServicesData = [];
+            const container = document.getElementById(`${serviceId}_${packageType}_subservices`);
+            
+            if (container) {
+                const subServiceItems = container.querySelectorAll('.service-item-expanded');
+                
+                subServiceItems.forEach(item => {
+                    const checkbox = item.querySelector('input[type="checkbox"]');
+                    
+                    if (checkbox && checkbox.checked) {
+                        const inputs = item.querySelectorAll('input[type="number"], textarea');
+                        const checkboxes = item.querySelectorAll('.service-details-form input[type="checkbox"]');
+                        
+                        const subServiceData = {
+                            name: checkbox.nextElementSibling.textContent,
+                            price: inputs[0]?.value || '',
+                            duration: inputs[1]?.value || '',
+                            teamSize: inputs[2]?.value || '',
+                            description: item.querySelector('textarea')?.value || '',
+                            includedInBase: checkboxes[0]?.checked || false,
+                            popularChoice: checkboxes[1]?.checked || false,
+                            specifications: []
+                        };
+                        
+                        const specInputs = item.querySelectorAll('.specification-item input[type="text"]');
+                        specInputs.forEach(specInput => {
+                            if (specInput.value.trim()) {
+                                subServiceData.specifications.push(specInput.value.trim());
+                            }
+                        });
+                        
+                        subServicesData.push(subServiceData);
+                    }
                 });
             }
-
-            return packageData;
+            
+            return subServicesData;
         }
 
         function collectServiceFormData() {
             const formData = {
                 vendorType: 'service',
-                timestamp: '2025-10-19 15:18:09',
+                timestamp: '2025-10-21 13:04:38',
                 createdBy: 'nicksri-1248',
                 basicInfo: {
                     serviceName: document.getElementById('serviceName').value,
@@ -1461,12 +1696,13 @@
             return formData;
         }
 
+        // VALIDATION FUNCTIONS
         function validateVenueForm() {
             const venueName = document.getElementById('venueName').value;
             const venueEmail = document.getElementById('venueEmail').value;
             const venueDescription = document.getElementById('venueDescription').value;
 
-                       if (!venueName || !venueEmail || !venueDescription) {
+            if (!venueName || !venueEmail || !venueDescription) {
                 alert('⚠️ Please fill in all basic information fields!');
                 return false;
             }
@@ -1487,25 +1723,6 @@
 
                 if (venuePackageFacilities[pkg].size === 0) {
                     alert(`⚠️ Please select at least one facility for ${pkg.charAt(0).toUpperCase() + pkg.slice(1)} venue package!`);
-                    return false;
-                }
-            }
-
-            for (let pkg of packages) {
-                const price = document.getElementById(`service_${pkg}_price`).value;
-                const capacity = document.getElementById(`service_${pkg}_capacity`).value;
-                const team = document.getElementById(`service_${pkg}_team`).value;
-
-                if (!price || !capacity || !team) {
-                    alert(`⚠️ Please fill in all service details for ${pkg.charAt(0).toUpperCase() + pkg.slice(1)} package!`);
-                    return false;
-                }
-
-                const subServicesList = document.getElementById(`service_${pkg}_subServicesList`);
-                const subServicesCount = subServicesList.querySelectorAll('.sub-service-card').length;
-                
-                if (subServicesCount === 0) {
-                    alert(`⚠️ Please add at least one sub-service for ${pkg.charAt(0).toUpperCase() + pkg.slice(1)} service package!`);
                     return false;
                 }
             }
@@ -1546,6 +1763,7 @@
             return true;
         }
 
+        // DRAFT & SUBMIT FUNCTIONS
         function saveDraft() {
             if (!selectedVendorType) {
                 alert('⚠️ Please select a vendor type first!');
@@ -1561,7 +1779,7 @@
 
             localStorage.setItem('listingDraft', JSON.stringify(formData));
             localStorage.setItem('listingDraftType', selectedVendorType);
-            localStorage.setItem('listingDraftDate', '2025-10-19 15:21:48');
+            localStorage.setItem('listingDraftDate', '2025-10-21 13:04:38');
             
             alert('💾 Draft saved successfully! You can continue editing later.');
             console.log('Draft saved:', formData);
@@ -1594,7 +1812,35 @@
 
             console.log('📤 Submitting listing:', formData);
             
-            alert('🎉 Listing submitted successfully!\n\nYour listing is now pending approval.\n\nSubmitted by: nicksri-1248\nTimestamp: 2025-10-19 15:21:48\n\nCheck console for full data.');
+            // API call would go here
+            /*
+            fetch('/api/listings/create', {
+                method: 'POST',
+                headers: { 
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer YOUR_TOKEN'
+                },
+                body: JSON.stringify(formData)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    alert('🎉 Listing submitted successfully!');
+                    localStorage.removeItem('listingDraft');
+                    localStorage.removeItem('listingDraftType');
+                    localStorage.removeItem('listingDraftDate');
+                    window.location.href = '/listings/' + data.listingId;
+                } else {
+                    alert('❌ Error: ' + data.message);
+                }
+            })
+            .catch(error => {
+                console.error('Error:', error);
+                alert('❌ Failed to submit listing. Please try again.');
+            });
+            */
+
+            alert('🎉 Listing submitted successfully!\n\nYour listing is now pending approval.\n\nSubmitted by: nicksri-1248\nTimestamp: 2025-10-21 13:04:38 UTC\n\nCheck console for full data.');
             
             localStorage.removeItem('listingDraft');
             localStorage.removeItem('listingDraftType');
@@ -1624,12 +1870,6 @@
                                 document.getElementById(`venue_${pkg}_name`).value = draftData.venuePackages[pkg].name || '';
                                 document.getElementById(`venue_${pkg}_description`).value = draftData.venuePackages[pkg].description || '';
                             }
-                            
-                            if (draftData.servicePackages && draftData.servicePackages[pkg]) {
-                                document.getElementById(`service_${pkg}_price`).value = draftData.servicePackages[pkg].basePrice || '';
-                                document.getElementById(`service_${pkg}_capacity`).value = draftData.servicePackages[pkg].guestCapacity || '';
-                                document.getElementById(`service_${pkg}_team`).value = draftData.servicePackages[pkg].teamSize || '';
-                            }
                         });
                         
                         alert('✅ Draft loaded successfully! Please review and continue editing.');
@@ -1648,6 +1888,7 @@
             }
         }
 
+        // AUTO-SAVE
         let autoSaveTimer;
         function setupAutoSave() {
             document.addEventListener('input', function(e) {
@@ -1659,7 +1900,7 @@
                                 ? collectVenueFormData() 
                                 : collectServiceFormData();
                             sessionStorage.setItem('autoSave', JSON.stringify(formData));
-                            sessionStorage.setItem('autoSaveTime', '2025-10-19 15:21:48');
+                            sessionStorage.setItem('autoSaveTime', '2025-10-21 13:04:38');
                             console.log('✅ Auto-saved at', new Date().toLocaleTimeString());
                         }
                     }, 3000);
@@ -1667,11 +1908,12 @@
             });
         }
 
+        // INITIALIZATION
         window.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 Listing Form Initialized');
-            console.log('📅 Current Date & Time: 2025-10-19 15:21:48');
+            console.log('📅 Current Date & Time: 2025-10-21 13:04:38 UTC');
             console.log('👤 Current User: nicksri-1248');
-            console.log('🌐 Vendor Listing Management System v2.0');
+            console.log('🌐 Vendor Listing Management System v3.0');
             
             setupAutoSave();
             loadDraft();
@@ -1700,6 +1942,7 @@
             }
         });
 
+        // UTILITY FUNCTIONS
         function generateSummaryReport() {
             if (!selectedVendorType) {
                 alert('⚠️ Please fill in the form first!');
@@ -1714,7 +1957,7 @@
             report += '='.repeat(60) + '\n\n';
             report += `Vendor Type: ${selectedVendorType.toUpperCase()}\n`;
             report += `Created By: nicksri-1248\n`;
-            report += `Date: 2025-10-19 15:21:48\n\n`;
+            report += `Date: 2025-10-21 13:04:38 UTC\n\n`;
 
             if (selectedVendorType === 'venue') {
                 report += `Venue Name: ${formData.basicInfo.venueName}\n`;
@@ -1729,15 +1972,13 @@
                     report += `Facilities Count: ${venueData.facilities.length}\n`;
                 });
 
-                report += '\n\n--- SERVICE PACKAGES (Pricing & Details) ---\n';
-                ['standard', 'premium', 'royal'].forEach(pkg => {
-                    const serviceData = formData.servicePackages[pkg];
-                    report += `\n${pkg.toUpperCase()} SERVICE PACKAGE:\n`;
+                report += '\n\n--- SERVICES ---\n';
+                formData.services.forEach((service, index) => {
+                    report += `\nService ${index + 1}: ${service.categoryName}\n`;
                     report += `-`.repeat(40) + '\n';
-                    report += `Base Price: ₹${serviceData.basePrice}\n`;
-                    report += `Capacity: ${serviceData.guestCapacity}\n`;
-                    report += `Team Size: ${serviceData.teamSize}\n`;
-                    report += `Sub-Services: ${serviceData.subServices.length}\n`;
+                    ['standard', 'premium', 'royal'].forEach(pkg => {
+                        report += `  ${pkg.toUpperCase()}: ${service.packages[pkg].length} sub-services\n`;
+                    });
                 });
             } else {
                 report += `Service Name: ${formData.basicInfo.serviceName}\n`;
@@ -1779,11 +2020,11 @@
         }
 
         window.debugListingForm = function() {
-            console.log('🔍 DEBUG INFO - 2025-10-19 15:21:48');
+            console.log('🔍 DEBUG INFO - 2025-10-21 13:04:38 UTC');
             console.log('👤 User: nicksri-1248');
             console.log('📌 Selected Vendor Type:', selectedVendorType);
             console.log('🏛️ Venue Package Facilities:', venuePackageFacilities);
-            console.log('🎨 Service Package Sub-Services Counters:', servicePackageSubServices);
+            console.log('🎪 Main Service Counter:', mainServiceCounter);
             console.log('🔢 Custom Service Counter:', customServiceCounter);
             console.log('🔢 Sub Service Counter:', subServiceCounter);
             
@@ -1801,30 +2042,15 @@
             }
         };
 
-        const performanceData = {
-            loadTime: 0,
-            interactions: 0,
-            startTime: Date.now()
-        };
-
-        window.addEventListener('load', function() {
-            performanceData.loadTime = performance.now();
-            console.log(`⚡ Page loaded in ${performanceData.loadTime.toFixed(2)}ms`);
-        });
-
-        document.addEventListener('click', function() {
-            performanceData.interactions++;
-        });
-
+        // CONSOLE BRANDING
         console.log('%c⌨️ KEYBOARD SHORTCUTS', 'color: #4299e1; font-weight: bold; font-size: 16px; background: #000; padding: 5px;');
         console.log('%cCtrl/Cmd + S: Save Draft', 'color: #48bb78; font-size: 12px;');
         console.log('%cESC: Close All Accordions', 'color: #48bb78; font-size: 12px;');
         console.log('%c\n💡 TIP: Type debugListingForm() in console to see current form state', 'color: #f59e0b; font-style: italic; font-size: 12px;');
         console.log('%c💡 TIP: Type generateSummaryReport() to create a detailed report', 'color: #f59e0b; font-style: italic; font-size: 12px;');
         console.log('%c💡 TIP: Type exportAsJSON() to download form data', 'color: #f59e0b; font-style: italic; font-size: 12px;');
-
         console.log('%c\n🎯 Vendor Listing Management System', 'color: white; background: black; font-size: 20px; font-weight: bold; padding: 10px;');
-        console.log('%cPowered by nicksri-1248 | Version 2.0 | 2025-10-19 15:21:48', 'color: #718096; font-size: 11px;');
+        console.log('%cPowered by nicksri-1248 | Version 3.0 | 2025-10-21 13:04:38 UTC', 'color: #718096; font-size: 11px;');
     </script>
 </body>
 </html>
