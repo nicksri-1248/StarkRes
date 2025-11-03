@@ -581,7 +581,50 @@
                 </div>
             </div>
 
-            <!-- VENUE PACKAGES SECTION -->
+            
+            <!-- EVENT CATEGORY SELECTION (NEW FEATURE) -->
+            <div class="form-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-left-color: #667eea; color: white;">
+                <h2 style="color: white; margin-bottom: 10px;">🎉 Select Event Category</h2>
+                <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; font-size: 14px;">
+                    Choose the primary type of event this venue will host. This will help organize package-wise services later.
+                </p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+                    <!-- Marriage/Wedding Category -->
+                    <div class="category-card" id="category_marriage" onclick="selectEventCategory('marriage')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">💍</div>
+                        <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Marriage / Wedding</h4>
+                        <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Wedding ceremonies & receptions</p>
+                    </div>
+                    <!-- Birthday Party Category -->
+                    <div class="category-card" id="category_birthday" onclick="selectEventCategory('birthday')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🎂</div>
+                        <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Birthday Party</h4>
+                        <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Birthday celebrations & parties</p>
+                    </div>
+                    <!-- Conference Category -->
+                    <div class="category-card" id="category_conference" onclick="selectEventCategory('conference')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🎤</div>
+                        <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Conference</h4>
+                        <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Corporate events & conferences</p>
+                    </div>
+                    <!-- Reception Category -->
+                    <div class="category-card" id="category_reception" onclick="selectEventCategory('reception')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
+                        <div style="font-size: 40px; margin-bottom: 10px;">🥂</div>
+                        <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Reception</h4>
+                        <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Social receptions & gatherings</p>
+                    </div>
+                </div>
+                <!-- Selected Category Indicator -->
+                <div id="selectedCategoryIndicator" style="display: none; margin-top: 20px; text-align: center;">
+                    <span style="background: #48bb78; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600; display: inline-block; font-size: 14px;">
+                        ✅ Selected: <span id="selectedCategoryName"></span>
+                    </span>
+                </div>
+            </div>
+
+            <!-- VENUE PACKAGES WRAPPER - HIDDEN UNTIL CATEGORY SELECTED -->
+            <div id="venuePackagesWrapper" style="display: none;">
+<!-- VENUE PACKAGES SECTION -->
             <div class="form-section" style="border-left-color: #667eea;">
                 <h2>🏛️ VENUE PACKAGES (Facilities Only)</h2>
                 <p style="color: #718096; margin-bottom: 20px;">Select venue facilities for each package. No pricing or details needed here - just checkboxes.</p>
@@ -649,6 +692,8 @@
                     <div id="venueRoyalCategoriesContainer"></div>
                 </div>
             </div>
+
+                        </div>
 
             <!-- DIVIDER -->
             <div class="divider-section">
@@ -746,6 +791,59 @@
 
     <script>
         let selectedVendorType = null;
+        let selectedEventCategory = null;
+
+        // ==================== EVENT CATEGORY SELECTION FUNCTION (NEW) ====================
+        function selectEventCategory(categoryType) {
+            selectedEventCategory = categoryType;
+
+            // Remove selection styling from all category cards
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.borderColor = '#e2e8f0';
+                card.style.background = 'white';
+            });
+
+            // Apply selection styling to clicked card
+            const selectedCard = document.getElementById(`category_${categoryType}`);
+            if (selectedCard) {
+                selectedCard.style.borderColor = '#48bb78';
+                selectedCard.style.background = '#f0fff4';
+            }
+
+            // Show the selected category badge
+            const indicator = document.getElementById('selectedCategoryIndicator');
+            if (indicator) {
+                indicator.style.display = 'block';
+
+                // Map category type to display name
+                const categoryNames = {
+                    'marriage': 'Marriage / Wedding 💍',
+                    'birthday': 'Birthday Party 🎂',
+                    'conference': 'Conference 🎤',
+                    'reception': 'Reception 🥂'
+                };
+
+                document.getElementById('selectedCategoryName').textContent = categoryNames[categoryType];
+            }
+
+            // Show venue packages wrapper
+            const packagesWrapper = document.getElementById('venuePackagesWrapper');
+            if (packagesWrapper) {
+                packagesWrapper.style.display = 'block';
+
+                // Scroll to packages section
+                setTimeout(() => {
+                    packagesWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+
+            console.log(`✅ Event category selected: ${categoryType}`);
+            console.log(`📋 Packages section is now visible for: ${categoryType} events`);
+
+            // Auto-save the selection
+            autoSaveVenueForm();
+        }
+
         let customServiceCounter = 0;
         let subServiceCounter = 0;
         let mainServiceCounter = 0;
@@ -1560,6 +1658,7 @@
         function collectVenueFormData() {
             const formData = {
                 vendorType: 'venue',
+                eventCategory: selectedEventCategory,
                 timestamp: '2025-10-21 13:04:38',
                 createdBy: 'nicksri-1248',
                 basicInfo: {
@@ -1698,6 +1797,15 @@
 
         // VALIDATION FUNCTIONS
         function validateVenueForm() {
+            
+
+            // Check if event category is selected
+            if (!selectedEventCategory) {
+                alert('⚠️ IMPORTANT: Please select an event category first!\n\nChoose from: Marriage, Birthday Party, Conference, or Reception');
+                document.querySelector('.form-section[style*="linear-gradient"]').scrollIntoView({ behavior: 'smooth' });
+                return false;
+            }
+
             const venueName = document.getElementById('venueName').value;
             const venueEmail = document.getElementById('venueEmail').value;
             const venueDescription = document.getElementById('venueDescription').value;
