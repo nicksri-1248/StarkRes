@@ -533,6 +533,57 @@
         .service-details-form.active {
             display: block;
         }
+
+        /* NEW STYLES FOR SERVICE CATEGORY CARDS */
+        .service-category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .service-category-card {
+            background: white;
+            padding: 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: center;
+            border: 3px solid #e2e8f0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 140px;
+        }
+
+        .service-category-card:hover {
+            border-color: #667eea;
+            background: #f0f4ff;
+            transform: translateY(-2px);
+        }
+
+        .service-category-card.added {
+            border-color: #48bb78;
+            background: #f0fff4;
+        }
+
+        .service-category-icon {
+            font-size: 40px;
+            margin-bottom: 10px;
+        }
+
+        .service-category-title {
+            font-weight: 600;
+            color: #2d3748;
+            font-size: 15px;
+            margin-bottom: 5px;
+        }
+
+        .service-category-desc {
+            font-size: 11px;
+            color: #718096;
+        }
     </style>
 </head>
 <body>
@@ -581,40 +632,34 @@
                 </div>
             </div>
 
-            
-            <!-- EVENT CATEGORY SELECTION (NEW FEATURE) -->
+            <!-- EVENT CATEGORY SELECTION -->
             <div class="form-section" style="background: linear-gradient(135deg, #667eea 0%, #764ba2 100%); border-left-color: #667eea; color: white;">
                 <h2 style="color: white; margin-bottom: 10px;">🎉 Select Event Category</h2>
                 <p style="color: rgba(255, 255, 255, 0.9); margin-bottom: 20px; font-size: 14px;">
                     Choose the primary type of event this venue will host. This will help organize package-wise services later.
                 </p>
                 <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
-                    <!-- Marriage/Wedding Category -->
                     <div class="category-card" id="category_marriage" onclick="selectEventCategory('marriage')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                         <div style="font-size: 40px; margin-bottom: 10px;">💍</div>
                         <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Marriage / Wedding</h4>
                         <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Wedding ceremonies & receptions</p>
                     </div>
-                    <!-- Birthday Party Category -->
                     <div class="category-card" id="category_birthday" onclick="selectEventCategory('birthday')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                         <div style="font-size: 40px; margin-bottom: 10px;">🎂</div>
                         <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Birthday Party</h4>
                         <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Birthday celebrations & parties</p>
                     </div>
-                    <!-- Conference Category -->
                     <div class="category-card" id="category_conference" onclick="selectEventCategory('conference')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                         <div style="font-size: 40px; margin-bottom: 10px;">🎤</div>
                         <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Conference</h4>
                         <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Corporate events & conferences</p>
                     </div>
-                    <!-- Reception Category -->
                     <div class="category-card" id="category_reception" onclick="selectEventCategory('reception')" style="background: white; padding: 20px; border-radius: 8px; cursor: pointer; transition: all 0.3s ease; text-align: center; border: 3px solid #e2e8f0; display: flex; flex-direction: column; align-items: center; justify-content: center;">
                         <div style="font-size: 40px; margin-bottom: 10px;">🥂</div>
                         <h4 style="margin: 0; color: #2d3748; font-size: 16px; font-weight: 600;">Reception</h4>
                         <p style="margin: 5px 0 0 0; color: #718096; font-size: 12px;">Social receptions & gatherings</p>
                     </div>
                 </div>
-                <!-- Selected Category Indicator -->
                 <div id="selectedCategoryIndicator" style="display: none; margin-top: 20px; text-align: center;">
                     <span style="background: #48bb78; color: white; padding: 10px 20px; border-radius: 20px; font-weight: 600; display: inline-block; font-size: 14px;">
                         ✅ Selected: <span id="selectedCategoryName"></span>
@@ -622,100 +667,102 @@
                 </div>
             </div>
 
-            <!-- VENUE PACKAGES WRAPPER - HIDDEN UNTIL CATEGORY SELECTED -->
+            <!-- VENUE PACKAGES WRAPPER -->
             <div id="venuePackagesWrapper" style="display: none;">
-<!-- VENUE PACKAGES SECTION -->
-            <div class="form-section" style="border-left-color: #667eea;">
-                <h2>🏛️ VENUE PACKAGES (Facilities Only)</h2>
-                <p style="color: #718096; margin-bottom: 20px;">Select venue facilities for each package. No pricing or details needed here - just checkboxes.</p>
-                
-                <div class="package-tabs">
-                    <button class="package-tab active" onclick="switchVenuePackageTab('standard')">
-                        🌿 Standard <span class="badge badge-standard">BUDGET</span>
-                    </button>
-                    <button class="package-tab" onclick="switchVenuePackageTab('premium')">
-                        💎 Premium <span class="badge badge-premium">COMFORT</span>
-                    </button>
-                    <button class="package-tab" onclick="switchVenuePackageTab('royal')">
-                        👑 Royal <span class="badge badge-royal">LUXURY</span>
-                    </button>
-                </div>
-
-                <!-- Standard Venue Package -->
-                <div id="venueStandardPackage" class="package-content active">
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Package Name *</label>
-                            <input type="text" id="venue_standard_name" placeholder="e.g., Standard Venue Package" value="Standard Venue Package">
-                        </div>
-                        <div class="form-group">
-                            <label>Package Description</label>
-                            <textarea id="venue_standard_description" placeholder="Perfect for family functions, birthdays, engagements & local events..." rows="3"></textarea>
-                        </div>
+                <!-- VENUE PACKAGES SECTION -->
+                <div class="form-section" style="border-left-color: #667eea;">
+                    <h2>🏛️ VENUE PACKAGES (Facilities Only)</h2>
+                    <p style="color: #718096; margin-bottom: 20px;">Select venue facilities for each package. No pricing or details needed here - just checkboxes.</p>
+                    
+                    <div class="package-tabs">
+                        <button class="package-tab active" onclick="switchVenuePackageTab('standard')">
+                            🌿 Standard <span class="badge badge-standard">BUDGET</span>
+                        </button>
+                        <button class="package-tab" onclick="switchVenuePackageTab('premium')">
+                            💎 Premium <span class="badge badge-premium">COMFORT</span>
+                        </button>
+                        <button class="package-tab" onclick="switchVenuePackageTab('royal')">
+                            👑 Royal <span class="badge badge-royal">LUXURY</span>
+                        </button>
                     </div>
 
-                    <h4 style="margin: 20px 0 15px 0; color: #2d3748;">Select Venue Facilities:</h4>
-                    <div id="venueStandardCategoriesContainer"></div>
-                </div>
-
-                <!-- Premium Venue Package -->
-                <div id="venuePremiumPackage" class="package-content">
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Package Name *</label>
-                            <input type="text" id="venue_premium_name" placeholder="e.g., Premium Venue Package" value="Premium Venue Package">
+                    <!-- Standard Venue Package -->
+                    <div id="venueStandardPackage" class="package-content active">
+                        <div class="row">
+                            <div class="form-group">
+                                <label>Package Name *</label>
+                                <input type="text" id="venue_standard_name" placeholder="e.g., Standard Venue Package" value="Standard Venue Package">
+                            </div>
+                            <div class="form-group">
+                                <label>Package Description</label>
+                                <textarea id="venue_standard_description" placeholder="Perfect for family functions, birthdays, engagements & local events..." rows="3"></textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Package Description</label>
-                            <textarea id="venue_premium_description" placeholder="For weddings, receptions, corporate events, and luxury parties..." rows="3"></textarea>
-                        </div>
+                        <h4 style="margin: 20px 0 15px 0; color: #2d3748;">Select Venue Facilities:</h4>
+                        <div id="venueStandardCategoriesContainer"></div>
                     </div>
 
-                    <h4 style="margin: 20px 0 15px 0; color: #2d3748;">Select Venue Facilities:</h4>
-                    <div id="venuePremiumCategoriesContainer"></div>
-                </div>
-
-                <!-- Royal Venue Package -->
-                <div id="venueRoyalPackage" class="package-content">
-                    <div class="row">
-                        <div class="form-group">
-                            <label>Package Name *</label>
-                            <input type="text" id="venue_royal_name" placeholder="e.g., Royal Venue Package" value="Royal Venue Package">
+                    <!-- Premium Venue Package -->
+                    <div id="venuePremiumPackage" class="package-content">
+                        <div class="row">
+                            <div class="form-group">
+                                <label>Package Name *</label>
+                                <input type="text" id="venue_premium_name" placeholder="e.g., Premium Venue Package" value="Premium Venue Package">
+                            </div>
+                            <div class="form-group">
+                                <label>Package Description</label>
+                                <textarea id="venue_premium_description" placeholder="For weddings, receptions, corporate events, and luxury parties..." rows="3"></textarea>
+                            </div>
                         </div>
-                        <div class="form-group">
-                            <label>Package Description</label>
-                            <textarea id="venue_royal_description" placeholder="For grand weddings, corporate galas, concerts & VIP events..." rows="3"></textarea>
-                        </div>
+                        <h4 style="margin: 20px 0 15px 0; color: #2d3748;">Select Venue Facilities:</h4>
+                        <div id="venuePremiumCategoriesContainer"></div>
                     </div>
 
-                    <h4 style="margin: 20px 0 15px 0; color: #2d3748;">Select Venue Facilities:</h4>
-                    <div id="venueRoyalCategoriesContainer"></div>
+                    <!-- Royal Venue Package -->
+                    <div id="venueRoyalPackage" class="package-content">
+                        <div class="row">
+                            <div class="form-group">
+                                <label>Package Name *</label>
+                                <input type="text" id="venue_royal_name" placeholder="e.g., Royal Venue Package" value="Royal Venue Package">
+                            </div>
+                            <div class="form-group">
+                                <label>Package Description</label>
+                                <textarea id="venue_royal_description" placeholder="For grand weddings, corporate galas, concerts & VIP events..." rows="3"></textarea>
+                            </div>
+                        </div>
+                        <h4 style="margin: 20px 0 15px 0; color: #2d3748;">Select Venue Facilities:</h4>
+                        <div id="venueRoyalCategoriesContainer"></div>
+                    </div>
+                </div>
+
+                <!-- DIVIDER -->
+                <div class="divider-section">
+                    <h2>⬇️ SERVICES SECTION ⬇️</h2>
+                    <p style="margin: 5px 0 0 0; opacity: 0.9;">Add and configure services like Entertainment, Decoration, Catering, etc. with package-wise details</p>
+                </div>
+
+                <!-- SERVICES SECTION (UPDATED - NO DROPDOWN) -->
+                <div class="form-section" style="border-left-color: #f59e0b;">
+                    <h2>🎪 SERVICES (Entertainment, Decoration, Catering, etc.)</h2>
+                    <p style="color: #718096; margin-bottom: 20px;">Click on service categories below to add them. Each service will open with Standard, Premium, and Royal package configurations.</p>
+                    
+                    <!-- SERVICE CATEGORY CARDS (NO DROPDOWN) -->
+                    <div class="service-category-grid" id="serviceCategoryGrid">
+                        <!-- Cards will be generated by JavaScript -->
+                    </div>
+
+                    <!-- Container for added service forms -->
+                    <div id="servicesMainContainer"></div>
                 </div>
             </div>
 
-                        </div>
-
-            <!-- DIVIDER -->
-            <div class="divider-section">
-                <h2>⬇️ SERVICES SECTION ⬇️</h2>
-                <p style="margin: 5px 0 0 0; opacity: 0.9;">Add and configure services like Entertainment, Decoration, Catering, etc. with package-wise details</p>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="saveDraft()">💾 Save as Draft</button>
+                <button type="button" class="btn btn-primary" onclick="submitListing()">🚀 Submit Listing</button>
             </div>
-
-            <!-- SERVICES SECTION (NEW) -->
-            <div class="form-section" style="border-left-color: #f59e0b;">
-                <h2>🎪 SERVICES (Entertainment, Decoration, Catering, etc.)</h2>
-                <p style="color: #718096; margin-bottom: 20px;">Select services and configure sub-services for Standard, Premium, and Royal packages with specifications.</p>
-                
-                <div id="servicesMainContainer"></div>
-                
-                <button type="button" class="btn btn-success" onclick="addNewServiceCategory()" style="margin-top: 20px;">
-                    ➕ Add Service Category
-                </button>
-            </div>
-
         </div>
 
-        <!-- Service Provider Form (Kept As Is) -->
+        <!-- Service Provider Form -->
         <div id="serviceProviderForm" class="form-container">
             <div class="alert alert-info">
                 <strong>Service Provider:</strong> Create a single main service with sub-services and specifications.
@@ -781,69 +828,17 @@
                 <div id="subServicesList"></div>
                 <button type="button" class="btn btn-success btn-small" onclick="addSubService()">+ Add Sub-Service</button>
             </div>
-        </div>
 
-        <div class="form-actions">
-            <button type="button" class="btn btn-secondary" onclick="saveDraft()">💾 Save as Draft</button>
-            <button type="button" class="btn btn-primary" onclick="submitListing()">🚀 Submit Listing</button>
+            <div class="form-actions">
+                <button type="button" class="btn btn-secondary" onclick="saveDraft()">💾 Save as Draft</button>
+                <button type="button" class="btn btn-primary" onclick="submitListing()">🚀 Submit Listing</button>
+            </div>
         </div>
     </div>
 
     <script>
         let selectedVendorType = null;
         let selectedEventCategory = null;
-
-        // ==================== EVENT CATEGORY SELECTION FUNCTION (NEW) ====================
-        function selectEventCategory(categoryType) {
-            selectedEventCategory = categoryType;
-
-            // Remove selection styling from all category cards
-            document.querySelectorAll('.category-card').forEach(card => {
-                card.style.borderColor = '#e2e8f0';
-                card.style.background = 'white';
-            });
-
-            // Apply selection styling to clicked card
-            const selectedCard = document.getElementById(`category_${categoryType}`);
-            if (selectedCard) {
-                selectedCard.style.borderColor = '#48bb78';
-                selectedCard.style.background = '#f0fff4';
-            }
-
-            // Show the selected category badge
-            const indicator = document.getElementById('selectedCategoryIndicator');
-            if (indicator) {
-                indicator.style.display = 'block';
-
-                // Map category type to display name
-                const categoryNames = {
-                    'marriage': 'Marriage / Wedding 💍',
-                    'birthday': 'Birthday Party 🎂',
-                    'conference': 'Conference 🎤',
-                    'reception': 'Reception 🥂'
-                };
-
-                document.getElementById('selectedCategoryName').textContent = categoryNames[categoryType];
-            }
-
-            // Show venue packages wrapper
-            const packagesWrapper = document.getElementById('venuePackagesWrapper');
-            if (packagesWrapper) {
-                packagesWrapper.style.display = 'block';
-
-                // Scroll to packages section
-                setTimeout(() => {
-                    packagesWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }, 300);
-            }
-
-            console.log(`✅ Event category selected: ${categoryType}`);
-            console.log(`📋 Packages section is now visible for: ${categoryType} events`);
-
-            // Auto-save the selection
-            autoSaveVenueForm();
-        }
-
         let customServiceCounter = 0;
         let subServiceCounter = 0;
         let mainServiceCounter = 0;
@@ -854,9 +849,9 @@
             royal: new Set()
         };
 
-        let venueServices = []; // Store all added service categories
+        let addedServiceCategories = new Set(); // Track added services to prevent duplicates
 
-        // Service Categories with Sub-Services and Specifications
+        // Service Categories with Sub-Services
         const serviceCategories = {
             "Entertainments": {
                 icon: "🎭",
@@ -1318,6 +1313,133 @@
             }
         };
 
+        // Initialize service category cards
+        function initializeServiceCategoryCards() {
+            const grid = document.getElementById('serviceCategoryGrid');
+            grid.innerHTML = '';
+            
+            Object.keys(serviceCategories).forEach(categoryName => {
+                const categoryData = serviceCategories[categoryName];
+                const card = document.createElement('div');
+                card.className = 'service-category-card';
+                card.setAttribute('data-category', categoryName);
+                card.innerHTML = `
+                    <div class="service-category-icon">${categoryData.icon}</div>
+                    <div class="service-category-title">${categoryName}</div>
+                    <div class="service-category-desc">Click to add</div>
+                `;
+                card.onclick = () => addServiceCategory(categoryName);
+                grid.appendChild(card);
+            });
+        }
+
+        // Add service category when card is clicked
+        function addServiceCategory(categoryName) {
+            // Check if already added
+            if (addedServiceCategories.has(categoryName)) {
+                alert(`⚠️ ${categoryName} has already been added! Scroll down to view and edit.`);
+                // Scroll to existing service
+                const existingService = document.querySelector(`[data-service-category="${categoryName}"]`);
+                if (existingService) {
+                    existingService.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                    existingService.style.border = '3px solid #f59e0b';
+                    setTimeout(() => {
+                        existingService.style.border = '2px solid #e2e8f0';
+                    }, 2000);
+                }
+                return;
+            }
+
+            mainServiceCounter++;
+            addedServiceCategories.add(categoryName);
+            
+            // Mark card as added
+            const cards = document.querySelectorAll('.service-category-card');
+            cards.forEach(card => {
+                if (card.getAttribute('data-category') === categoryName) {
+                    card.classList.add('added');
+                    card.querySelector('.service-category-desc').textContent = 'Added ✓';
+                }
+            });
+
+            const serviceId = `service_${mainServiceCounter}`;
+            const container = document.getElementById('servicesMainContainer');
+            const categoryData = serviceCategories[categoryName];
+            
+            const serviceCard = document.createElement('div');
+            serviceCard.className = 'sub-service-card';
+            serviceCard.style.background = '#f0f9ff';
+            serviceCard.setAttribute('data-service-category', categoryName);
+            serviceCard.setAttribute('data-service-id', serviceId);
+            
+            serviceCard.innerHTML = `
+                <div class="sub-service-header">
+                    <h3 style="margin: 0; color: #1e40af;">${categoryData.icon} ${categoryName}</h3>
+                    <button type="button" class="btn btn-danger btn-small" onclick="removeServiceCategory('${categoryName}', '${serviceId}')">Remove</button>
+                </div>
+                
+                <input type="hidden" id="${serviceId}_category" value="${categoryName}">
+                
+                <div id="${serviceId}_packages_container" style="margin-top: 20px;">
+                    <h4 style="margin-bottom: 15px; color: #1e40af;">Configure Packages for ${categoryName}</h4>
+                    
+                    <div class="package-tabs">
+                        <button class="package-tab active" onclick="switchServiceTab('${serviceId}', 'standard')">
+                            🌿 Standard <span class="badge badge-standard">BUDGET</span>
+                        </button>
+                        <button class="package-tab" onclick="switchServiceTab('${serviceId}', 'premium')">
+                            💎 Premium <span class="badge badge-premium">COMFORT</span>
+                        </button>
+                        <button class="package-tab" onclick="switchServiceTab('${serviceId}', 'royal')">
+                            👑 Royal <span class="badge badge-royal">LUXURY</span>
+                        </button>
+                    </div>
+                    
+                    <div id="${serviceId}_standard_content" class="package-content active">
+                        <div id="${serviceId}_standard_subservices"></div>
+                    </div>
+                    
+                    <div id="${serviceId}_premium_content" class="package-content">
+                        <div id="${serviceId}_premium_subservices"></div>
+                    </div>
+                    
+                    <div id="${serviceId}_royal_content" class="package-content">
+                        <div id="${serviceId}_royal_subservices"></div>
+                    </div>
+                </div>
+            `;
+            
+            container.appendChild(serviceCard);
+            loadSubServicesForCategory(serviceId, categoryName);
+            
+            // Scroll to newly added service
+            setTimeout(() => {
+                serviceCard.scrollIntoView({ behavior: 'smooth', block: 'center' });
+            }, 100);
+        }
+
+        // Remove service category
+        function removeServiceCategory(categoryName, serviceId) {
+            if (confirm(`Remove ${categoryName} and all its configurations?`)) {
+                addedServiceCategories.delete(categoryName);
+                
+                // Remove from DOM
+                const serviceCard = document.querySelector(`[data-service-id="${serviceId}"]`);
+                if (serviceCard) {
+                    serviceCard.remove();
+                }
+                
+                // Unmark card
+                const cards = document.querySelectorAll('.service-category-card');
+                cards.forEach(card => {
+                    if (card.getAttribute('data-category') === categoryName) {
+                        card.classList.remove('added');
+                        card.querySelector('.service-category-desc').textContent = 'Click to add';
+                    }
+                });
+            }
+        }
+
         function selectVendorType(type) {
             selectedVendorType = type;
             
@@ -1329,11 +1451,52 @@
                 document.getElementById('venueProviderForm').classList.add('active');
                 document.getElementById('serviceProviderForm').classList.remove('active');
                 initializeVenuePackages();
+                initializeServiceCategoryCards(); // Initialize service cards
             } else {
                 document.getElementById('serviceProviderBtn').classList.add('active');
                 document.getElementById('serviceProviderForm').classList.add('active');
                 document.getElementById('venueProviderForm').classList.remove('active');
             }
+        }
+
+        function selectEventCategory(categoryType) {
+            selectedEventCategory = categoryType;
+
+            document.querySelectorAll('.category-card').forEach(card => {
+                card.style.borderColor = '#e2e8f0';
+                card.style.background = 'white';
+            });
+
+            const selectedCard = document.getElementById(`category_${categoryType}`);
+            if (selectedCard) {
+                selectedCard.style.borderColor = '#48bb78';
+                selectedCard.style.background = '#f0fff4';
+            }
+
+            const indicator = document.getElementById('selectedCategoryIndicator');
+            if (indicator) {
+                indicator.style.display = 'block';
+
+                const categoryNames = {
+                    'marriage': 'Marriage / Wedding 💍',
+                    'birthday': 'Birthday Party 🎂',
+                    'conference': 'Conference 🎤',
+                    'reception': 'Reception 🥂'
+                };
+
+                document.getElementById('selectedCategoryName').textContent = categoryNames[categoryType];
+            }
+
+            const packagesWrapper = document.getElementById('venuePackagesWrapper');
+            if (packagesWrapper) {
+                packagesWrapper.style.display = 'block';
+
+                setTimeout(() => {
+                    packagesWrapper.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                }, 300);
+            }
+
+            console.log(`✅ Event category selected: ${categoryType}`);
         }
 
         function initializeVenuePackages() {
@@ -1427,78 +1590,8 @@
             document.getElementById(`venue${packageType.charAt(0).toUpperCase() + packageType.slice(1)}Package`).classList.add('active');
         }
 
-        // NEW SERVICES SECTION FUNCTIONS
-        function addNewServiceCategory() {
-            mainServiceCounter++;
-            const serviceId = `service_${mainServiceCounter}`;
-            const container = document.getElementById('servicesMainContainer');
-            
-            const serviceCard = document.createElement('div');
-            serviceCard.className = 'sub-service-card';
-            serviceCard.style.background = '#f0f9ff';
-            serviceCard.innerHTML = `
-                <div class="sub-service-header">
-                    <h3 style="margin: 0; color: #1e40af;">Service Category #${mainServiceCounter}</h3>
-                    <button type="button" class="btn btn-danger btn-small" onclick="this.parentElement.parentElement.remove()">Remove</button>
-                </div>
-                
-                <div class="form-group">
-                    <label>Select Service Category *</label>
-                    <select id="${serviceId}_category" onchange="loadSubServicesForCategory('${serviceId}')" style="padding: 10px; font-size: 14px;">
-                        <option value="">-- Select Service Category --</option>
-                        ${Object.keys(serviceCategories).map(cat => 
-                            `<option value="${cat}">${serviceCategories[cat].icon} ${cat}</option>`
-                        ).join('')}
-                    </select>
-                </div>
-                
-                <div id="${serviceId}_packages_container" style="display: none; margin-top: 20px;">
-                    <h4 style="margin-bottom: 15px; color: #1e40af;">Configure Packages for this Service</h4>
-                    
-                    <div class="package-tabs">
-                        <button class="package-tab active" onclick="switchServiceTab('${serviceId}', 'standard')">
-                            🌿 Standard <span class="badge badge-standard">BUDGET</span>
-                        </button>
-                        <button class="package-tab" onclick="switchServiceTab('${serviceId}', 'premium')">
-                            💎 Premium <span class="badge badge-premium">COMFORT</span>
-                        </button>
-                        <button class="package-tab" onclick="switchServiceTab('${serviceId}', 'royal')">
-                            👑 Royal <span class="badge badge-royal">LUXURY</span>
-                        </button>
-                    </div>
-                    
-                    <!-- Standard Package -->
-                    <div id="${serviceId}_standard_content" class="package-content active">
-                        <div id="${serviceId}_standard_subservices"></div>
-                    </div>
-                    
-                    <!-- Premium Package -->
-                    <div id="${serviceId}_premium_content" class="package-content">
-                        <div id="${serviceId}_premium_subservices"></div>
-                    </div>
-                    
-                    <!-- Royal Package -->
-                    <div id="${serviceId}_royal_content" class="package-content">
-                        <div id="${serviceId}_royal_subservices"></div>
-                    </div>
-                </div>
-            `;
-            
-            container.appendChild(serviceCard);
-        }
-
-        function loadSubServicesForCategory(serviceId) {
-            const categorySelect = document.getElementById(`${serviceId}_category`);
-            const selectedCategory = categorySelect.value;
-            
-            if (!selectedCategory) {
-                document.getElementById(`${serviceId}_packages_container`).style.display = 'none';
-                return;
-            }
-            
-            document.getElementById(`${serviceId}_packages_container`).style.display = 'block';
-            
-            const categoryData = serviceCategories[selectedCategory];
+        function loadSubServicesForCategory(serviceId, categoryName) {
+            const categoryData = serviceCategories[categoryName];
             const packages = ['standard', 'premium', 'royal'];
             
             packages.forEach(pkg => {
@@ -1515,7 +1608,7 @@
                             <input type="checkbox" 
                                    id="${subServiceId}_check" 
                                    onchange="toggleSubServiceDetails('${subServiceId}')">
-                            <label for="${subServiceId}_check">${subService.name}</label>
+                            <label for="${subServiceId}_check}">${subService.name}</label>
                         </div>
                         
                         <div class="service-details-form" id="${subServiceId}_details">
@@ -1549,7 +1642,7 @@
                                                 `<button type="button" class="btn btn-success btn-mini" onclick="addSpecification('${subServiceId}_specs')">+</button>` :
                                                 `<button type="button" class="btn btn-danger btn-mini" onclick="this.parentElement.remove()">-</button>`
                                             }
-                                                        </div>
+                                        </div>
                                     `).join('')}
                                 </div>
                             </div>
@@ -1604,7 +1697,6 @@
             container.appendChild(specItem);
         }
 
-        // SERVICE PROVIDER FUNCTIONS (KEPT AS IS)
         function addSubService() {
             subServiceCounter++;
             const container = document.getElementById('subServicesList');
@@ -1654,12 +1746,11 @@
             container.appendChild(subServiceCard);
         }
 
-        // DATA COLLECTION FUNCTIONS
         function collectVenueFormData() {
             const formData = {
                 vendorType: 'venue',
                 eventCategory: selectedEventCategory,
-                timestamp: '2025-10-21 13:04:38',
+                timestamp: new Date().toISOString(),
                 createdBy: 'nicksri-1248',
                 basicInfo: {
                     venueName: document.getElementById('venueName').value,
@@ -1688,13 +1779,13 @@
             const servicesData = [];
             const serviceCards = document.querySelectorAll('#servicesMainContainer .sub-service-card');
             
-            serviceCards.forEach((card, index) => {
-                const serviceId = `service_${index + 1}`;
-                const categorySelect = document.getElementById(`${serviceId}_category`);
+            serviceCards.forEach(card => {
+                const serviceId = card.getAttribute('data-service-id');
+                const categoryName = card.getAttribute('data-service-category');
                 
-                if (categorySelect && categorySelect.value) {
+                if (categoryName) {
                     const serviceData = {
-                        categoryName: categorySelect.value,
+                        categoryName: categoryName,
                         packages: {
                             standard: collectServicePackageSubServices(serviceId, 'standard'),
                             premium: collectServicePackageSubServices(serviceId, 'premium'),
@@ -1751,7 +1842,7 @@
         function collectServiceFormData() {
             const formData = {
                 vendorType: 'service',
-                timestamp: '2025-10-21 13:04:38',
+                timestamp: new Date().toISOString(),
                 createdBy: 'nicksri-1248',
                 basicInfo: {
                     serviceName: document.getElementById('serviceName').value,
@@ -1795,13 +1886,9 @@
             return formData;
         }
 
-        // VALIDATION FUNCTIONS
         function validateVenueForm() {
-            
-
-            // Check if event category is selected
             if (!selectedEventCategory) {
-                alert('⚠️ IMPORTANT: Please select an event category first!\n\nChoose from: Marriage, Birthday Party, Conference, or Reception');
+                alert('⚠️ IMPORTANT: Please select an event category first!');
                 document.querySelector('.form-section[style*="linear-gradient"]').scrollIntoView({ behavior: 'smooth' });
                 return false;
             }
@@ -1871,7 +1958,6 @@
             return true;
         }
 
-        // DRAFT & SUBMIT FUNCTIONS
         function saveDraft() {
             if (!selectedVendorType) {
                 alert('⚠️ Please select a vendor type first!');
@@ -1887,7 +1973,7 @@
 
             localStorage.setItem('listingDraft', JSON.stringify(formData));
             localStorage.setItem('listingDraftType', selectedVendorType);
-            localStorage.setItem('listingDraftDate', '2025-10-21 13:04:38');
+            localStorage.setItem('listingDraftDate', new Date().toISOString());
             
             alert('💾 Draft saved successfully! You can continue editing later.');
             console.log('Draft saved:', formData);
@@ -1920,245 +2006,17 @@
 
             console.log('📤 Submitting listing:', formData);
             
-            // API call would go here
-            /*
-            fetch('/api/listings/create', {
-                method: 'POST',
-                headers: { 
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer YOUR_TOKEN'
-                },
-                body: JSON.stringify(formData)
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    alert('🎉 Listing submitted successfully!');
-                    localStorage.removeItem('listingDraft');
-                    localStorage.removeItem('listingDraftType');
-                    localStorage.removeItem('listingDraftDate');
-                    window.location.href = '/listings/' + data.listingId;
-                } else {
-                    alert('❌ Error: ' + data.message);
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('❌ Failed to submit listing. Please try again.');
-            });
-            */
-
-            alert('🎉 Listing submitted successfully!\n\nYour listing is now pending approval.\n\nSubmitted by: nicksri-1248\nTimestamp: 2025-10-21 13:04:38 UTC\n\nCheck console for full data.');
+            alert('🎉 Listing submitted successfully!\n\nYour listing is now pending approval.\n\nCheck console for full data.');
             
             localStorage.removeItem('listingDraft');
             localStorage.removeItem('listingDraftType');
             localStorage.removeItem('listingDraftDate');
         }
 
-        function loadDraft() {
-            const draft = localStorage.getItem('listingDraft');
-            const draftType = localStorage.getItem('listingDraftType');
-            const draftDate = localStorage.getItem('listingDraftDate');
-            
-            if (draft && draftType) {
-                const loadDraft = confirm(`📝 Found a saved draft from ${draftDate || 'a previous session'}.\n\nWould you like to load it?`);
-                if (loadDraft) {
-                    const draftData = JSON.parse(draft);
-                    console.log('Loading draft:', draftData);
-                    
-                    selectVendorType(draftType);
-                    
-                    if (draftType === 'venue') {
-                        document.getElementById('venueName').value = draftData.basicInfo.venueName || '';
-                        document.getElementById('venueEmail').value = draftData.basicInfo.email || '';
-                        document.getElementById('venueDescription').value = draftData.basicInfo.description || '';
-                        
-                        ['standard', 'premium', 'royal'].forEach(pkg => {
-                            if (draftData.venuePackages && draftData.venuePackages[pkg]) {
-                                document.getElementById(`venue_${pkg}_name`).value = draftData.venuePackages[pkg].name || '';
-                                document.getElementById(`venue_${pkg}_description`).value = draftData.venuePackages[pkg].description || '';
-                            }
-                        });
-                        
-                        alert('✅ Draft loaded successfully! Please review and continue editing.');
-                    } else {
-                        document.getElementById('serviceName').value = draftData.basicInfo.serviceName || '';
-                        document.getElementById('serviceEmail').value = draftData.basicInfo.email || '';
-                        document.getElementById('serviceDescription').value = draftData.basicInfo.description || '';
-                        document.getElementById('mainServiceType').value = draftData.mainService.type || '';
-                        document.getElementById('serviceBasePrice').value = draftData.mainService.basePrice || '';
-                        document.getElementById('serviceGuestCapacity').value = draftData.mainService.guestCapacity || '';
-                        document.getElementById('serviceTeamSize').value = draftData.mainService.teamSize || '';
-                        
-                        alert('✅ Draft loaded successfully! Please review and continue editing.');
-                    }
-                }
-            }
-        }
-
-        // AUTO-SAVE
-        let autoSaveTimer;
-        function setupAutoSave() {
-            document.addEventListener('input', function(e) {
-                if (e.target.matches('input, textarea, select')) {
-                    clearTimeout(autoSaveTimer);
-                    autoSaveTimer = setTimeout(() => {
-                        if (selectedVendorType) {
-                            const formData = selectedVendorType === 'venue' 
-                                ? collectVenueFormData() 
-                                : collectServiceFormData();
-                            sessionStorage.setItem('autoSave', JSON.stringify(formData));
-                            sessionStorage.setItem('autoSaveTime', '2025-10-21 13:04:38');
-                            console.log('✅ Auto-saved at', new Date().toLocaleTimeString());
-                        }
-                    }, 3000);
-                }
-            });
-        }
-
-        // INITIALIZATION
         window.addEventListener('DOMContentLoaded', function() {
             console.log('🚀 Listing Form Initialized');
-            console.log('📅 Current Date & Time: 2025-10-21 13:04:38 UTC');
-            console.log('👤 Current User: nicksri-1248');
-            console.log('🌐 Vendor Listing Management System v3.0');
-            
-            setupAutoSave();
-            loadDraft();
-            
-            document.addEventListener('keydown', function(e) {
-                if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                    e.preventDefault();
-                    saveDraft();
-                }
-                
-                if (e.key === 'Escape') {
-                    document.querySelectorAll('.category-header.active').forEach(header => {
-                        header.classList.remove('active');
-                        header.nextElementSibling.classList.remove('active');
-                    });
-                }
-            });
+            console.log('🌐 Vendor Listing Management System v4.0');
         });
-
-        window.addEventListener('beforeunload', function(e) {
-            const autoSave = sessionStorage.getItem('autoSave');
-            if (autoSave && selectedVendorType) {
-                e.preventDefault();
-                e.returnValue = 'You have unsaved changes. Are you sure you want to leave?';
-                return e.returnValue;
-            }
-        });
-
-        // UTILITY FUNCTIONS
-        function generateSummaryReport() {
-            if (!selectedVendorType) {
-                alert('⚠️ Please fill in the form first!');
-                return;
-            }
-
-            const formData = selectedVendorType === 'venue' 
-                ? collectVenueFormData() 
-                : collectServiceFormData();
-
-            let report = '📊 LISTING SUMMARY REPORT\n';
-            report += '='.repeat(60) + '\n\n';
-            report += `Vendor Type: ${selectedVendorType.toUpperCase()}\n`;
-            report += `Created By: nicksri-1248\n`;
-            report += `Date: 2025-10-21 13:04:38 UTC\n\n`;
-
-            if (selectedVendorType === 'venue') {
-                report += `Venue Name: ${formData.basicInfo.venueName}\n`;
-                report += `Email: ${formData.basicInfo.email}\n\n`;
-
-                report += '--- VENUE PACKAGES (Facilities) ---\n';
-                ['standard', 'premium', 'royal'].forEach(pkg => {
-                    const venueData = formData.venuePackages[pkg];
-                    report += `\n${pkg.toUpperCase()} VENUE PACKAGE:\n`;
-                    report += `-`.repeat(40) + '\n';
-                    report += `Name: ${venueData.name}\n`;
-                    report += `Facilities Count: ${venueData.facilities.length}\n`;
-                });
-
-                report += '\n\n--- SERVICES ---\n';
-                formData.services.forEach((service, index) => {
-                    report += `\nService ${index + 1}: ${service.categoryName}\n`;
-                    report += `-`.repeat(40) + '\n';
-                    ['standard', 'premium', 'royal'].forEach(pkg => {
-                        report += `  ${pkg.toUpperCase()}: ${service.packages[pkg].length} sub-services\n`;
-                    });
-                });
-            } else {
-                report += `Service Name: ${formData.basicInfo.serviceName}\n`;
-                report += `Email: ${formData.basicInfo.email}\n`;
-                report += `Main Service: ${formData.mainService.type}\n`;
-                report += `Base Price: ₹${formData.mainService.basePrice}\n`;
-                report += `Guest Capacity: ${formData.mainService.guestCapacity}\n`;
-                report += `Team Size: ${formData.mainService.teamSize}\n`;
-                report += `Sub-Services: ${formData.subServices.length}\n`;
-            }
-
-            console.log(report);
-            alert('📊 Summary report generated!\n\nCheck the browser console for full details.');
-        }
-
-        function exportAsJSON() {
-            if (!selectedVendorType) {
-                alert('⚠️ Please fill in the form first!');
-                return;
-            }
-
-            const formData = selectedVendorType === 'venue' 
-                ? collectVenueFormData() 
-                : collectServiceFormData();
-
-            const dataStr = JSON.stringify(formData, null, 2);
-            const dataBlob = new Blob([dataStr], {type: 'application/json'});
-            
-            const url = URL.createObjectURL(dataBlob);
-            const link = document.createElement('a');
-            link.href = url;
-            link.download = `listing_${selectedVendorType}_${Date.now()}.json`;
-            document.body.appendChild(link);
-            link.click();
-            document.body.removeChild(link);
-            URL.revokeObjectURL(url);
-            
-            alert('📥 Listing data exported as JSON file!');
-        }
-
-        window.debugListingForm = function() {
-            console.log('🔍 DEBUG INFO - 2025-10-21 13:04:38 UTC');
-            console.log('👤 User: nicksri-1248');
-            console.log('📌 Selected Vendor Type:', selectedVendorType);
-            console.log('🏛️ Venue Package Facilities:', venuePackageFacilities);
-            console.log('🎪 Main Service Counter:', mainServiceCounter);
-            console.log('🔢 Custom Service Counter:', customServiceCounter);
-            console.log('🔢 Sub Service Counter:', subServiceCounter);
-            
-            if (selectedVendorType) {
-                const formData = selectedVendorType === 'venue' 
-                    ? collectVenueFormData() 
-                    : collectServiceFormData();
-                console.log('📋 Current Form Data:', formData);
-            }
-            
-            const autoSave = sessionStorage.getItem('autoSave');
-            if (autoSave) {
-                console.log('💾 Auto-saved Data:', JSON.parse(autoSave));
-                console.log('⏰ Auto-save Time:', sessionStorage.getItem('autoSaveTime'));
-            }
-        };
-
-        // CONSOLE BRANDING
-        console.log('%c⌨️ KEYBOARD SHORTCUTS', 'color: #4299e1; font-weight: bold; font-size: 16px; background: #000; padding: 5px;');
-        console.log('%cCtrl/Cmd + S: Save Draft', 'color: #48bb78; font-size: 12px;');
-        console.log('%cESC: Close All Accordions', 'color: #48bb78; font-size: 12px;');
-        console.log('%c\n💡 TIP: Type debugListingForm() in console to see current form state', 'color: #f59e0b; font-style: italic; font-size: 12px;');
-        console.log('%c💡 TIP: Type generateSummaryReport() to create a detailed report', 'color: #f59e0b; font-style: italic; font-size: 12px;');
-        console.log('%c💡 TIP: Type exportAsJSON() to download form data', 'color: #f59e0b; font-style: italic; font-size: 12px;');
-        console.log('%c\n🎯 Vendor Listing Management System', 'color: white; background: black; font-size: 20px; font-weight: bold; padding: 10px;');
-        console.log('%cPowered by nicksri-1248 | Version 3.0 | 2025-10-21 13:04:38 UTC', 'color: #718096; font-size: 11px;');
     </script>
 </body>
 </html>
